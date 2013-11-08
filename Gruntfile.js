@@ -1,10 +1,6 @@
 // Generated on 2013-09-02 using reaction 0.0.0
 'use strict';
 var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
-  return connect.static(require('path').resolve(dir));
-};
 
 module.exports = function (grunt) {
   // load all grunt tasks
@@ -19,33 +15,28 @@ module.exports = function (grunt) {
       livereload: {
         files: [
           'index.html',
-          'app/components/**/*',
-          'app/stores/**/*',
-          'app/styles/**/*'
+          'app/components/**/*{.jsx,.scss}',
+          'app/stores/**/*.js',
+          'app/styles/**/*.scss'
         ],
         tasks: ['build']
       }
     },
-    connect: {
-      options: {
-        port: 9000,
-        // change this to '0.0.0.0' to access the server from outside
-        hostname: 'localhost'
-      },
-      livereload: {
+    express: {
+      server: {
         options: {
-          middleware: function (connect) {
-            return [
-              lrSnippet,
-              mountFolder(connect, '.')
-            ];
-          }
+          port: 9000,
+          // change this to '0.0.0.0' to access the server from outside
+          hostname: 'localhost',
+          server: 'app.js',
+          livereload: LIVERELOAD_PORT,
+          bases: ['public', 'build']
         }
       }
     },
     open: {
       server: {
-        path: 'http://localhost:<%= connect.options.port %>'
+        path: 'http://localhost:<%= express.server.options.port %>'
       }
     },
     react: {
@@ -60,7 +51,7 @@ module.exports = function (grunt) {
     },
     browserify: {
       main: {
-        src: 'build/js/components/Application/Application.js',
+        src: 'app/lib/main.js',
         dest: 'build/js/main.js',
         options: {
           aliasMappings: [
@@ -107,14 +98,35 @@ module.exports = function (grunt) {
     compass: {
       build: {
         options: {
+          output: 'compressed',
           importPath: 'app/styles',
           sassDir: ['build/.tmp/scss'],
           cssDir: 'build/.tmp/css'
         }
       }
+    },
+    copy: {
+      build: {
+        expand: true,
+        cwd: 'build/',
+        src: ['css/styles.css', 'js/main.js'],
+        dest: 'public/'
+      }
+    },
+    uglify: {
+      prod: {
+        src: 'build/js/main.js',
+        dest: 'public/js/main.js'
+      }
+    },
+    cssmin: {
+      prod: {
+        src: 'build/css/styles.css',
+        dest: 'public/css/styles.css'
+      }
     }
   });
-
-  grunt.registerTask('build', ['react', 'browserify', 'concat:build', 'compass', 'concat:css']);
-  grunt.registerTask('default', ['build', 'connect:livereload', 'open', 'watch']);
+  grunt.registerTask('prod', ['react', 'browserify', 'concat:build', 'compass', 'concat:css', 'cssmin', 'uglify'])
+  grunt.registerTask('build', ['react', 'browserify', 'concat:build', 'compass', 'concat:css', 'copy']);
+  grunt.registerTask('default', ['build', 'express', 'open', 'watch']);
 };

@@ -1,12 +1,9 @@
-var Arbiter = require('Arbiter');
-var Lawnchair = require('Lawnchair');
-
-var Store = Lawnchair;
+var Arbiter = require('Arbiter').create();
+var Store = require('Lawnchair');
 
 // register to a dispatcher event
 
-Store.prototype.subscribe = Arbiter.subscribe;
-
 Store.prototype.publish = Arbiter.publish;
+Store.prototype.subscribe = Arbiter.subscribe;
 
 module.exports = Store;
