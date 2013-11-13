@@ -1,0 +1,19 @@
+@import "Grid.scss";
+@import "Colors";
+@import "font-awesome/font-awesome.scss";
+
+.Filters {
+  .keywords {
+    @include column(11);
+    background: $green;
+  }
+
+  .clear {
+    @include column(1);
+    @include icon($remove);
+    color: white;
+    line-height: 3em;
+    background: $green;
+    text-align: center;
+  }
+}

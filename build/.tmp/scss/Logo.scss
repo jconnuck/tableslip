@@ -1,0 +1,12 @@
+@import "Grid.scss";
+@import "Colors";
+
+.Logo {
+  @include column(4);
+  font-family: 'Grand Hotel';
+  font-size: 2em;
+  line-height: 1.5em;
+  color: white;
+  background-color: $green;
+  text-align: center;
+}

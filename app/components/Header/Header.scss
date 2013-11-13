@@ -1,0 +1,16 @@
+@import "Grid.scss";
+@import "Colors";
+
+.Header {
+  .fb-login-button {
+    @include column(16);
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    background: adjust-lightness(#5f78ab, -5);
+    span {
+      float: right;
+      display: hidden;
+    }
+  }
+}

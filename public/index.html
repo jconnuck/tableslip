@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tableslip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tableslip">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="bower_modules/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_modules/isotope/jquery.isotope.min.js"></script>
+    <script type="text/javascript" src="bower_modules/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bower_modules/sockjs/sockjs.min.js"></script>
+    <script type="text/javascript" src="js/main.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="tableslip">
+    </div>
+
+    <div id="fb-root"></div>
+    <script>
+      // Additional JS functions here
+      var Components = require('Arbiter');
+
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '527486897302458', // App ID
+          channelUrl : '/channel.html', // Channel File
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true,  // parse XFBML
+        });
+
+        // Additional init code here
+        FB.Event.subscribe('auth.authResponseChange', function (response) {
+            if (response.status === 'connected') {
+              // Get user's events
+              var rsvp_statuses = {};
+              FB.api('/me?fields=id,name,events.limit(100).fields(rsvp_status,end_time)', function(res) {
+                res.events.data.forEach(function (event) {
+                  rsvp_statuses[event.id] = event.rsvp_status;
+                });
+
+              });
+
+              // Get user's friend events
+              FB.api('/me?fields=friends.fields(events.limit(10).fields(id,name,start_time,rsvp_status,parent_group).since(today).until(next\%20week))', function(res) {
+                var eventsAttending = {};
+                res.friends.data.map(function (friend) {
+                  if (friend.events) {
+                    friend.events.data.forEach(function(event) {
+                      if (event.rsvp_status === 'attending') {
+                        if (!eventsAttending[event.id]) {
+                          eventsAttending[event.id] = {
+                            count: 0, 
+                            name: event.name,
+                            start_time: event.start_time,
+                            friendIDs: []
+                          };
+                        };
+                        eventsAttending[event.id].count += 1;
+                        eventsAttending[event.id].friendIDs.push(friend.id);
+                      };
+                    });
+                  };
+                });
+                var events = [];
+                for (eventID in eventsAttending) {
+                  eventsAttending[eventID].id = eventID;
+                  eventsAttending[eventID].rsvp_status = rsvp_statuses[eventID];
+                  events.push(eventsAttending[eventID]);
+                };
+                events.sort(function(a, b) {
+                  return b.count - a.count;
+                });
+
+                Components.publish('serverEvents', { events: events });
+              });
+            } else if (response.status === 'not_authorized') {
+              FB.login(function(response) {}, {scope: 'user_events, friends_events'});
+            } else {
+              FB.login(function(response) {}, {scope: 'user_events, friends_events'});       
+            }
+          }
+        );
+      };
+
+      // Load the SDK asynchronously
+      (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "https://connect.facebook.net/en_US/all.js";
+         ref.parentNode.insertBefore(js, ref);
+       }(document));
+    </script>
+  </body>
+</html>
