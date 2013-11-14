@@ -1,2 +1,7 @@
 node_modules
 *.log
+.DS_Store
+/build/**/*
+/public/js/main.js
+/public/css/styles.css
+.sass-cache/**/*
