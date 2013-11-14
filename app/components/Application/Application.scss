@@ -14,6 +14,16 @@ $fontPath: '/font';
 	font-style: normal;
 }
 
+@font-face {
+    font-family: 'Le Grande Jatte';
+    src: url('#{$fontPath}/grandhotel-regular-webfont.eot');
+	src:url('#{$fontPath}/grandhotel-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		url('#{$fontPath}/grandhotel-regular-webfont.ttf') format('truetype'),
+		url('#{$fontPath}/grandhotel-regular-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .Application {
   font-family: 'GeosansLight';
   font-weight: 400;
