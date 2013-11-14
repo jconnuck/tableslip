@@ -1,6 +1,19 @@
 @import "compass/reset";
 @import "Grid.scss";
 
+$fontPath: '/font';
+
+@font-face {
+    font-family: 'GeosansLight';
+    src: url('#{$fontPath}/geosanslight-webfont.eot');
+	src:url('#{$fontPath}/geosanslight-webfont.eot?#iefix') format('embedded-opentype'),
+		url('#{$fontPath}/geosanslight-webfont.ttf') format('truetype'),
+		url('#{$fontPath}/geosanslight-webfont.woff') format('woff'),
+		url('#{$fontPath}/geosanslight-webfont.svg#ionicons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .Application {
   font-family: 'GeosansLight';
   font-weight: 400;
