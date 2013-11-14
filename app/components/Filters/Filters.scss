@@ -1,6 +1,6 @@
 @import "Grid.scss";
 @import "Colors";
-@import "font-awesome/font-awesome.scss";
+@import "ionicons/ionicons.scss";
 
 .Filters {
   .keywords {
@@ -10,7 +10,7 @@
 
   .clear {
     @include column(1);
-    @include icon($remove);
+    @include icon($ios7-close-outline);
     color: white;
     line-height: 3em;
     background: $green;
