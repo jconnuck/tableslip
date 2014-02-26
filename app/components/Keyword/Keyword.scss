@@ -22,6 +22,6 @@
   }
 
   &.selected {
-    background: adjust-lightness($green, -2);
+    background: $green;
   }
 }

@@ -5,10 +5,31 @@ var ArbiterMixin = require('mixins/ArbiterMixin');
 
 var Logo = React.createClass({displayName: 'Logo',
   mixins: [ArbiterMixin],
+
+  componentWillMount: function () {
+    EventStore.subscribe('loadedEvents', this.handleLoadedEvents);
+  },
+
+  getInitialState: function () {
+    return {
+      loadedEvents: false
+    };
+  },
+
+  handleLoadedEvents: function (data) {
+    if (!data.cached) {
+      this.setState({
+        loadedEvents: true
+      });
+    }
+  },
   
   render: function () {
+    var spinnerClass = "spinner " + (this.state.loadedEvents ? "hide" : "");
+
     return (
       React.DOM.div( {className:"Logo"}, 
+      	React.DOM.span( {className:spinnerClass}),
 " Tableslip "      )
     );
   }

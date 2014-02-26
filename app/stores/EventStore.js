@@ -13,6 +13,7 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
 
     EventStore.batch(data.events, function(events) {
       EventStore.publish('loadedEvents', {
+        cached: false,
         events: events
       });
     });
@@ -23,6 +24,7 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
   var cachedEvents = function (data) {
     EventStore.all(function(events) {
       EventStore.publish('loadedEvents', {
+        cached: true,
         events: events
       }, {persist: true});
     });
@@ -30,6 +32,95 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
   };
 
   Dispatcher.subscribe('init', cachedEvents);
+
+  var rsvpUpdate = function (data) {
+    console.log(data);
+    var eventID = data.eventID;
+    var rsvp_status = data.rsvp_status;
+
+    FB.api('/' + eventID + '/' + rsvp_status, 'post', function (res) {
+      console.log(res);
+      // error if request didn't go through
+    });
+
+    EventStore.get(eventID, function (event) {
+      event.rsvp_status = rsvp_status;
+
+      EventStore.save(event, function () {
+        Dispatcher.publish('rsvpUpdate/' + eventID, {
+          rsvp_status: rsvp_status
+        });
+      });
+
+    });
+
+  };
+
+  Dispatcher.subscribe('rsvp', rsvpUpdate)
+
+  var fbLoaded = function () {
+    // Additional init code here
+    FB.Event.subscribe('auth.authResponseChange', function (response) {
+      if (response.status === 'connected') {
+        var me = response.authResponse.userID;
+
+        // Get user's friends events
+        FB.api('/me?fields=friends.fields(events.type(attending).limit(10).fields(id,name,cover,start_time,rsvp_status,parent_group,invited.user(' + me + ')).since(now).until(next\%20week))', function(res) {
+          var eventsAttending = {};
+          res.friends.data.map(function (friend) {
+            if (friend.events) {
+
+              friend.events.data.forEach(function(event) {
+
+                if (!eventsAttending[event.id]) {
+                  var cover = event.cover ? event.cover.source : undefined;
+                  var invited = event.invited;
+                  var rsvp_status = invited ? invited.data[0].rsvp_status : false;
+                  eventsAttending[event.id] = {
+                    count: 0,
+                    name: event.name,
+                    cover: cover,
+                    start_time: event.start_time,
+                    invited: !!invited,
+                    rsvp_status: rsvp_status,
+                    friendIDs: []
+                  };
+
+                }
+
+                eventsAttending[event.id].count += 1;
+                eventsAttending[event.id].friendIDs.push(friend.id);
+              
+              });
+
+            }
+          });
+
+          var events = [];
+
+          for (eventID in eventsAttending) {
+            eventsAttending[eventID].id = eventID;
+            events.push(eventsAttending[eventID]);
+          };
+
+          events.sort(function(a, b) {
+            return b.count - a.count;
+          });
+
+          Dispatcher.publish('serverEvents', {
+            cached: false, 
+            events: events 
+          });
+        });
+      } else if (response.status === 'not_authorized') {
+        FB.login(function(response) {}, {scope: 'user_events, friends_events'});
+      } else {
+        FB.login(function(response) {}, {scope: 'user_events, friends_events'});       
+      }
+    });
+  };
+
+  Dispatcher.subscribe('FBLoaded', fbLoaded);
 
 });
 

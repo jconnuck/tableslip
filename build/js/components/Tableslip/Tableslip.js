@@ -19,17 +19,28 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
       var count = React.DOM.div( {className:"profilePic count"}, "+" + more)
     };
 
+    var invited = this.props.event.invited ? " Invited" : "";
+
+    if (this.props.event.cover) {
+      var backgroundStyle = {
+        'background': 'url(' + this.props.event.cover + ')'    
+      };
+    }
+
     return (
-      React.DOM.a( {href:"http://www.facebook.com/" + this.props.event.id, className:"Tableslip " + date.format('ddd')}, 
-        React.DOM.div( {className:"name"}, this.props.event.name),
-        React.DOM.div( {className:"group"}, this.props.event.parent_group),
-        React.DOM.div( {className:"day"}, date.format('dddd MMMM Do')),
-        React.DOM.div( {className:"time"}, date.format('h:mm a')),
-        Rsvp( {eventID:this.props.event.id, status:this.props.event.rsvp_status} ),
-        React.DOM.div( {className:"friends"}, 
-          React.DOM.div( {className:"facepile"}, 
-            pics,
-            count
+      React.DOM.a( {href:"http://www.facebook.com/" + this.props.event.id, className:"Tableslip " + date.format('ddd') + invited}, 
+        React.DOM.div( {className:"background", style:backgroundStyle} ),
+        React.DOM.div( {className:"foreground"}, 
+          React.DOM.div( {className:"name"}, this.props.event.name),
+          React.DOM.div( {className:"group"}, this.props.event.parent_group),
+          React.DOM.div( {className:"day"}, date.format('dddd MMMM Do')),
+          React.DOM.div( {className:"time"}, date.format('h:mm a')),
+          Rsvp( {eventID:this.props.event.id, rsvp_status:this.props.event.rsvp_status} ),
+          React.DOM.div( {className:"friends"}, 
+            React.DOM.div( {className:"facepile"}, 
+              pics,
+              count
+            )
           )
         )
       )

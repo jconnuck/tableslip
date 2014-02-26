@@ -1,19 +1,19 @@
 @import "Grid.scss";
 @import "Colors";
-@import "font-awesome/font-awesome.scss";
+@import "ionicons/ionicons.scss";
 
 .Filters {
   .keywords {
     @include column(11);
-    background: $green;
+    background: $light-green;
   }
 
   .clear {
     @include column(1);
-    @include icon($remove);
+    @extend .ion-ios7-close-empty;
     color: white;
     line-height: 3em;
-    background: $green;
+    background: $light-green;
     text-align: center;
   }
 }

@@ -19,17 +19,28 @@ var Tableslip = React.createClass({
       var count = <div class="profilePic count">{"+" + more}</div>
     };
 
+    var invited = this.props.event.invited ? " Invited" : "";
+
+    if (this.props.event.cover) {
+      var backgroundStyle = {
+        'background': 'url(' + this.props.event.cover + ')'    
+      };
+    }
+
     return (
-      <a href={"http://www.facebook.com/" + this.props.event.id} class={"Tableslip " + date.format('ddd')}>
-        <div class="name">{this.props.event.name}</div>
-        <div class="group">{this.props.event.parent_group}</div>
-        <div class="day">{date.format('dddd MMMM Do')}</div>
-        <div class="time">{date.format('h:mm a')}</div>
-        <Rsvp eventID={this.props.event.id} status={this.props.event.rsvp_status} />
-        <div class="friends">
-          <div class="facepile">
-            {pics}
-            {count}
+      <a href={"http://www.facebook.com/" + this.props.event.id} class={"Tableslip " + date.format('ddd') + invited}>
+        <div class="background" style={backgroundStyle} />
+        <div class="foreground">
+          <div class="name">{this.props.event.name}</div>
+          <div class="group">{this.props.event.parent_group}</div>
+          <div class="day">{date.format('dddd MMMM Do')}</div>
+          <div class="time">{date.format('h:mm a')}</div>
+          <Rsvp eventID={this.props.event.id} rsvp_status={this.props.event.rsvp_status} />
+          <div class="friends">
+            <div class="facepile">
+              {pics}
+              {count}
+            </div>
           </div>
         </div>
       </a>

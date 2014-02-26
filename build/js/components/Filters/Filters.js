@@ -45,12 +45,12 @@ var Filters = React.createClass({displayName: 'Filters',
   },
 
   render: function () {
-    var days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'].map(function (day) {
+    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (day) {
       var selected = this.state.selected.indexOf(day) != -1;
       return Keyword( {selected:selected, name:day, filter:this.filter}, day);
     }.bind(this));
 
-    var keywords = ['free', 'movie', 'competition', 'party', 'food', 'art', 'dance'].map(function (keyword) {
+    var keywords = ['Invited', 'Free', 'Movie', 'Party', 'Food', 'Art', 'Dance'].map(function (keyword) {
       var selected = this.state.selected.indexOf(keyword) != -1;
       return Keyword( {selected:selected, name:keyword, filter:this.filter}, keyword);
     }.bind(this));

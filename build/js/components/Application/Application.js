@@ -31,6 +31,7 @@ var Application = React.createClass({displayName: 'Application',
     this.publish('init', {});
 
     EventStore.subscribe('loadedEvents', this.loadedEvents);
+    EventStore.subscribe('rsvpUpdate', this.rsvpUpdate);
   },
 
   loadedEvents: function (payload) {

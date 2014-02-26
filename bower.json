@@ -2,6 +2,7 @@
   "name": "tableslip",
   "version": "0.0.0",
   "dependencies": {
-    "sockjs": "~0.3.4"
+    "sockjs": "~0.3.4",
+    "react": "~0.9.0"
   }
 }

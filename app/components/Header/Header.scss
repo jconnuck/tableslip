@@ -1,5 +1,7 @@
-@import "Grid.scss";
+@import "Grid";
 @import "Colors";
+@import "Styles";
+@import "ionicons/ionicons";
 
 .Header {
   .fb-login-button {
@@ -7,10 +9,11 @@
     position: fixed;
     bottom: 0;
     z-index: 10;
-    background: adjust-lightness(#5f78ab, -5);
+    padding: .25em;
+    background: $fb-login-button-color;
     span {
       float: right;
-      display: hidden;
+      right: 1em;
     }
   }
 }

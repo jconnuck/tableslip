@@ -5,15 +5,15 @@
 .Filters {
   .keywords {
     @include column(11);
-    background: $green;
+    background: $light-green;
   }
 
   .clear {
     @include column(1);
-    @include icon($ios7-close-outline);
+    @extend .ion-ios7-close-empty;
     color: white;
     line-height: 3em;
-    background: $green;
+    background: $light-green;
     text-align: center;
   }
 }

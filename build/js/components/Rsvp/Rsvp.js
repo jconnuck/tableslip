@@ -12,54 +12,48 @@ var Rsvp = React.createClass({displayName: 'Rsvp',
 
   getInitialState: function () {
     return {
-      status: this.props.status
+      rsvp_status: this.props.rsvp_status
     };
   },
 
   componentWillMount: function () {
     /** Subscribe to events */
+    Dispatcher.subscribe('rsvpUpdate/' + this.props.eventID, this.rsvpUpdate);
   },
 
-  going: function (event) {    
-    event.preventDefault();
-
-    FB.api('/' + this.props.eventID + '/attending', 'post', function (res) {
-      console.log(res);
+  rsvp: function (rsvp_status) {
+    this.publish('rsvp', {
+      eventID: this.props.eventID,
+      rsvp_status: rsvp_status,
     });
+  },
 
+  rsvpUpdate: function (data) {
+    var rsvp_status = data.rsvp_status;
     this.setState({
-      status: 'attending'
+      rsvp_status: rsvp_status
     });
+  },
+
+  going: function (event) {
+    event.preventDefault();
+    this.rsvp('attending');    
   },
   
   maybe: function (event) {
     event.preventDefault();
-
-    FB.api('/' + this.props.eventID + '/maybe', 'post', function (res) {
-      console.log(res);
-    });
-    
-    this.setState({
-      status: 'unsure'
-    });
+    this.rsvp('maybe');
   },
 
   notGoing: function (event) {
     event.preventDefault();
-
-    FB.api('/' + this.props.eventID + '/declined', 'post', function (res) {
-      console.log(res);
-    });
-
-    this.setState({
-      status: 'declined'
-    });
+    this.rsvp('declined');
   },
 
   render: function () {
-    var goingClass = this.state.status === "attending" ? " active" : ""
-    var maybeClass = this.state.status === "unsure" ? " active" : ""
-    var notGoingClass = this.state.status === "declined" ? " active" : ""
+    var goingClass = this.state.rsvp_status === "attending" ? " active" : "";
+    var maybeClass = this.state.rsvp_status === "maybe" ? " active" : "";
+    var notGoingClass = this.state.rsvp_status === "declined" ? " active" : "";
 
     return (
       React.DOM.div( {className:"Rsvp"}, 

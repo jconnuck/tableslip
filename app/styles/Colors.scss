@@ -1,6 +1,12 @@
-$green: #00af4e;
+// $green: #00af4e;
+$light-green: #4CC783;
+$green: shade($light-green, 7);
+$fb-login-button-color: #415CAA;
+
 $light-blue-collar: #c5cdeb;
 $blue-collar: #547CE4;
+$blue-tie: #2F384D;
+$pencil-tip: #313338;
 $black-coffee: #12100C;
 $coffee-cream: #e4ded6;
 $yellow-pencil: #f6d505;

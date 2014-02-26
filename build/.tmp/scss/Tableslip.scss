@@ -1,49 +1,73 @@
-@import "Grid.scss";
-@import "Colors.scss";
+@import "Grid";
+@import "Colors";
+@import "Styles";
 
 .Tableslip {
   text-decoration: none;
   color: $green;
   text-align: center;
-  margin: 1px;
   width: 320px;
   height: 320px;
-  margin: 1px;
+  margin: 1em;
 
-  .name {
-    font-size: 1.5em;
-    padding: 1em;
+  .background {
+    background: $green;
+    background-size: cover;
+    background-position: center;
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    display: block;
   }
 
-  .keywords {
-    .eventKeyword {
-      text-align: center;
-      border: 1px solid $green;
-      padding: .25em;
-      margin: .25em;
-    }
-  }
-
-  .friends {
+  .foreground {
+    margin: 1em;
+    height: 288px;
+    background: rgba(255,255,255,.95);
     position: relative;
-    bottom: 2em;
-    color: white;
-    margin-top: 3em;
-    margin-left: auto;
-    margin-right: auto;
 
-    .facepile {
-      .profilePic {
-        width: 3em;
-        height: 3em;
-        display: inline-block;
+
+    .name {
+      font-size: 1.25em;
+      padding: 1em;
+    }
+
+    .invited {
+      font-size: .75em;
+    }
+
+    .keywords {
+      .eventKeyword {
+        text-align: center;
+        border: 1px solid $green;
+        padding: .25em;
+        margin: .25em;
       }
+    }
 
-      .count {
-        line-height: 3em;
-        vertical-align: top;
-        background: $green;
+    .friends {
+      position: relative;
+      bottom: 2em;
+      color: white;
+      margin-top: 3em;
+      margin-left: auto;
+      margin-right: auto;
+
+      .facepile {
+        .profilePic {
+          width: 3em;
+          height: 3em;
+          display: inline-block;
+        }
+
+        .count {
+          line-height: 3em;
+          vertical-align: top;
+          background: $green;
+        }
       }
     }
   }
+
+  
 }

@@ -1,5 +1,6 @@
 @import "Grid.scss";
 @import "Colors";
+@import "ionicons/ionicons";
 
 .Logo {
   @include column(4);
@@ -7,6 +8,19 @@
   font-size: 2em;
   line-height: 1.5em;
   color: white;
-  background-color: $green;
-  text-align: center;
+  background-color: $light-green;
+  padding-left: 1em;
+  margin-right: -1em;
+
+  .spinner {
+    font-size: .75em;
+    margin-right: 1em;
+    @extend .ion-loading-c;
+    color: $green;
+
+    &.hide {
+      display: auto;
+      visibility: hidden;
+    }
+  }
 }
