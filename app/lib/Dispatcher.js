@@ -3,7 +3,7 @@ var Arbiter = require('Arbiter');
 var Dispatcher = Arbiter.create();
 var Components = Arbiter;
 
-var sockjs = window.sockjs = new SockJS('http://localhost:9000');
+var sockjs = window.sockjs = new SockJS('/sock');
 
 var Sources = {
   USER: 'USER',

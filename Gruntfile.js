@@ -15,28 +15,29 @@ module.exports = function (grunt) {
       livereload: {
         files: [
           'index.html',
-          'app/components/**/*{.jsx,.scss}',
+          'app/components/**/*',
           'app/stores/**/*.js',
           'app/styles/**/*.scss'
         ],
-        tasks: ['build']
+        tasks: ['build:dev']
       }
     },
     express: {
-      server: {
+      options: {
+        port: 8080,
+        hostname: 'localhost',
+        open: true,
+        bases: ['bower_modules', 'public'],
+        server: 'app.js'
+      },
+      dev: {
         options: {
-          port: 9000,
-          // change this to '0.0.0.0' to access the server from outside
-          hostname: 'localhost',
-          server: 'app.js',
-          livereload: LIVERELOAD_PORT,
-          bases: ['public', 'build']
+          debug: true,
+          livereload: true
         }
-      }
-    },
-    open: {
-      server: {
-        path: 'http://localhost:<%= express.server.options.port %>'
+      },
+      prod: {
+
       }
     },
     react: {
@@ -79,29 +80,24 @@ module.exports = function (grunt) {
         }
       }
     },
-    concat: {
-      build: {
-        files: [
-          {
-            expand: true,
-            flatten: true,
-            src:  ['app/components/**/*.scss'],
-            dest: 'build/.tmp/scss'
-          }
-        ]
-      },
-      css: {
-        src: ['build/.tmp/css/**/*.css'],
-        dest: 'build/css/styles.css'
-      }
-    },
-    compass: {
-      build: {
+    sass: {
+      prod: {
+        style: 'compressed',
         options: {
-          output: 'compressed',
-          importPath: 'app/styles',
-          sassDir: ['build/.tmp/scss'],
-          cssDir: 'build/.tmp/css'
+          loadPath: ['app/components'],
+          compass: true,
+        },
+        files: {
+          'build/css/styles.css': 'app/styles/main.scss'
+        }
+      },
+      dev: {
+        options: {
+          loadPath: ['app/components'],
+          compass: true,
+        },
+        files: {
+          'build/css/styles.css': 'app/styles/main.scss'
         }
       }
     },
@@ -120,13 +116,41 @@ module.exports = function (grunt) {
       }
     },
     cssmin: {
+      options: {
+        report: 'gzip'
+      },
       prod: {
         src: 'build/css/styles.css',
         dest: 'public/css/styles.css'
       }
+    },
+    compress: {
+      phonegap: {
+        options: {
+          archive: '../phonegap.zip'
+        },
+        files: [
+          { src: ['bower_modules/**', 'public/**', 'config.xml'], dest: 'phonegap/' },
+        ]
+      }
+    },
+    'phonegap-build': {
+      phonegap: {      
+        options: {
+          archive: '../phonegap.zip',
+          appId: '680124',
+          user: {
+            email: 'dev.lightwait@gmail.com',
+            password: 'ML9okquyQCH7+UP2xCwGxhA)*Byzdn'
+          }
+        }
+      }
     }
   });
-  grunt.registerTask('prod', ['react', 'browserify', 'concat:build', 'compass', 'concat:css', 'cssmin', 'uglify'])
-  grunt.registerTask('build', ['react', 'browserify', 'concat:build', 'compass', 'concat:css', 'copy']);
-  grunt.registerTask('default', ['build', 'express', 'open', 'watch']);
+  grunt.registerTask('phonegap', ['build', 'compress:phonegap', 'phonegap-build']);
+  grunt.registerTask('build:prod', ['react', 'browserify', 'sass:prod', 'cssmin', 'uglify']);
+  grunt.registerTask('prod', ['build:prod', 'express:prod', 'express-keepalive']);
+  grunt.registerTask('build:dev', ['react', 'browserify', 'sass:dev', 'copy']);
+  grunt.registerTask('dev', ['build:dev', 'express:dev', 'watch']);
+  grunt.registerTask('default', ['dev']);
 };

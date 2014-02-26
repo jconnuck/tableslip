@@ -1,30 +1,50 @@
 var express = require('express');
 var sockjs  = require('sockjs');
 var http    = require('http');
+var redis   = require('redis').createClient();
+var redis_confirmations = require('redis').createClient();
+
+var EventTypes = {
+  TOGGLE_ITEM: 'toggleDone',
+  AUTH: 'login'
+};
+
+var REDIS_CHANNEL = 'lightwait';
 
 // 1. Echo sockjs server
 var sockjs_opts = {sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"};
 
-var sockjs_echo = sockjs.createServer();
-sockjs_echo.on('connection', function(conn) {
+var connections = {};
+var sockjs_broadcast = sockjs.createServer();
+sockjs_broadcast.on('connection', function(conn) {
+	connections[conn.id] = conn;
   console.log('new connection');
-  conn.on('data', function(message) {
-    console.log('message', message);
+  conn.on('data', function(msg) {
+    console.log('message', msg);
+    var message = JSON.parse(msg);      
   });
 });
 
-// 2. Express server
+// 2. Listen for confirmations from data_server
+redis_confirmations.subscribe(REDIS_CHANNEL);
+redis_confirmations.on("message", function (channel, message) {
+  console.log("data_server ", channel, message);
+});
+
+// 3. Express server
 var app = express(); /* express.createServer will not work here */
 var server = http.createServer(app);
 
 app.use(express.compress());
 
-sockjs_echo.installHandlers(server, { prefix : '/sock' });
+app.use(require('connect-livereload')({
+  port: 35729
+}));
 
-var oneDay = 86400000;
-app.use(express.static(__dirname + '/public', { maxAge: oneDay }));
-app.use('/bower_modules', express.static(__dirname + '/bower_modules'));
+sockjs_broadcast.installHandlers(server, { prefix : '/sock' });
 
-server.listen(9001);
-
-module.exports = app;
+exports = module.exports = server;
+// delegates user() function
+exports.use = function() {
+  app.use.apply(app, arguments);
+};
