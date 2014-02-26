@@ -34,12 +34,10 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
   Dispatcher.subscribe('init', cachedEvents);
 
   var rsvpUpdate = function (data) {
-    console.log(data);
     var eventID = data.eventID;
     var rsvp_status = data.rsvp_status;
 
     FB.api('/' + eventID + '/' + rsvp_status, 'post', function (res) {
-      console.log(res);
       // error if request didn't go through
     });
 
