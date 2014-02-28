@@ -15,14 +15,6 @@ var Filters = React.createClass({displayName: 'Filters',
   },
 
   componentDidMount: function () {
-    var events = document.getElementsByClassName('Events')[0];
-    this.iso = new Isotope(events, {
-      itemSelector: '.Tableslip',
-      isInitLayout: false,
-      masonry: {
-        isFitWidth: true
-      }
-    });
   },
 
   clear: function () {
@@ -30,12 +22,15 @@ var Filters = React.createClass({displayName: 'Filters',
       selected: []
     });
 
+    this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
+
     this.iso.arrange({
       filter: ''
     });
   },
 
   filter: function(keyword, select) {
+    this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
     var selected = this.state.selected.slice();
 
     if (select) {

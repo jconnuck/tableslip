@@ -13535,12 +13535,12 @@ module.exports=require('Jxf8r5');
 module.exports=require('fduHX3');
 },{}],"ReactUpdates":[function(require,module,exports){
 module.exports=require('dwYRw4');
-},{}],"ChangeEventPlugin":[function(require,module,exports){
-module.exports=require('KJ8HU6');
-},{}],"objMapKeyVal":[function(require,module,exports){
-module.exports=require('863Jz9');
 },{}],"DOMChildrenOperations":[function(require,module,exports){
 module.exports=require('a0oMnh');
+},{}],"objMapKeyVal":[function(require,module,exports){
+module.exports=require('863Jz9');
+},{}],"ChangeEventPlugin":[function(require,module,exports){
+module.exports=require('KJ8HU6');
 },{}],"SimpleEventPlugin":[function(require,module,exports){
 module.exports=require('vsWsrL');
 },{}],"CSSPropertyOperations":[function(require,module,exports){
@@ -13658,14 +13658,6 @@ var Filters = React.createClass({displayName: 'Filters',
   },
 
   componentDidMount: function () {
-    var events = document.getElementsByClassName('Events')[0];
-    this.iso = new Isotope(events, {
-      itemSelector: '.Tableslip',
-      isInitLayout: false,
-      masonry: {
-        isFitWidth: true
-      }
-    });
   },
 
   clear: function () {
@@ -13673,12 +13665,15 @@ var Filters = React.createClass({displayName: 'Filters',
       selected: []
     });
 
+    this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
+
     this.iso.arrange({
       filter: ''
     });
   },
 
   filter: function(keyword, select) {
+    this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
     var selected = this.state.selected.slice();
 
     if (select) {
@@ -13915,8 +13910,8 @@ var Rsvp = React.createClass({displayName: 'Rsvp',
 });
 
 module.exports = Rsvp;
-},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticFocusEvent":[function(require,module,exports){
-module.exports=require('ucaFnA');
+},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticEvent":[function(require,module,exports){
+module.exports=require('L5ht1h');
 },{}],"BX3Qr7":[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -13973,8 +13968,8 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
 });
 
 module.exports = Tableslip;
-},{"React":"53xxmY","Rsvp":"gq8/iv","mixins/ArbiterMixin":"4vB33x"}],"memoizeStringOnly":[function(require,module,exports){
-module.exports=require('w+d2Nh');
+},{"React":"53xxmY","Rsvp":"gq8/iv","mixins/ArbiterMixin":"4vB33x"}],"keyOf":[function(require,module,exports){
+module.exports=require('Q4rOoG');
 },{}],"Tableslip":[function(require,module,exports){
 module.exports=require('BX3Qr7');
 },{}],"SyntheticMouseEvent":[function(require,module,exports){
@@ -13999,16 +13994,16 @@ module.exports=require('49cVaj');
 module.exports=require('FN7wZd');
 },{}],"invariant":[function(require,module,exports){
 module.exports=require('hPxNWC');
-},{}],"Logo":[function(require,module,exports){
-module.exports=require('AJg5N/');
+},{}],"Rsvp":[function(require,module,exports){
+module.exports=require('gq8/iv');
 },{}],"SyntheticUIEvent":[function(require,module,exports){
 module.exports=require('unRgeP');
 },{}],"ReactDOMTextarea":[function(require,module,exports){
 module.exports=require('omUt5u');
 },{}],"getReactRootElementInContainer":[function(require,module,exports){
 module.exports=require('sz+OE9');
-},{}],"Rsvp":[function(require,module,exports){
-module.exports=require('gq8/iv');
+},{}],"Logo":[function(require,module,exports){
+module.exports=require('AJg5N/');
 },{}],"SyntheticWheelEvent":[function(require,module,exports){
 module.exports=require('MH4TbT');
 },{}],"Header":[function(require,module,exports){
@@ -14043,12 +14038,12 @@ module.exports=require('OocYg9');
 module.exports=require('RDDX+O');
 },{}],"dangerousStyleValue":[function(require,module,exports){
 module.exports=require('vbLjBj');
-},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
-module.exports=require('+VDCcA');
+},{}],"ReactComponentEnvironment":[function(require,module,exports){
+module.exports=require('kOHKbO');
 },{}],"createArrayFrom":[function(require,module,exports){
 module.exports=require('HDEmgB');
-},{}],"ReactDOMButton":[function(require,module,exports){
-module.exports=require('0sS+Uk');
+},{}],"ReactDOM":[function(require,module,exports){
+module.exports=require('6GzACJ');
 },{}],"emptyFunction":[function(require,module,exports){
 module.exports=require('RxjlFd');
 },{}],"ReactDOMForm":[function(require,module,exports){
@@ -14063,26 +14058,26 @@ module.exports=require('ZaIegL');
 module.exports=require('qzQld6');
 },{}],"adler32":[function(require,module,exports){
 module.exports=require('5ukn/R');
-},{}],"keyOf":[function(require,module,exports){
-module.exports=require('Q4rOoG');
+},{}],"memoizeStringOnly":[function(require,module,exports){
+module.exports=require('w+d2Nh');
 },{}],"flattenChildren":[function(require,module,exports){
 module.exports=require('cza1WC');
 },{}],"ReactDefaultPerf":[function(require,module,exports){
 module.exports=require('MTKS4R');
 },{}],"ViewportMetrics":[function(require,module,exports){
 module.exports=require('sk6wio');
-},{}],"ReactEventTopLevelCallback":[function(require,module,exports){
-module.exports=require('f4CWDK');
-},{}],"getMarkupWrap":[function(require,module,exports){
-module.exports=require('a26iu1');
+},{}],"ReactEventEmitter":[function(require,module,exports){
+module.exports=require('qPIJ8M');
+},{}],"getEventTarget":[function(require,module,exports){
+module.exports=require('eoIwTT');
 },{}],"ReactInstanceHandles":[function(require,module,exports){
 module.exports=require('owd960');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
 },{}],"ReactMount":[function(require,module,exports){
 module.exports=require('1R+7Eu');
-},{}],"getEventTarget":[function(require,module,exports){
-module.exports=require('eoIwTT');
+},{}],"getMarkupWrap":[function(require,module,exports){
+module.exports=require('a26iu1');
 },{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
 module.exports=require('1fqbih');
 },{}],"ReactInputSelection":[function(require,module,exports){
@@ -14107,12 +14102,12 @@ module.exports=require('5mz1Gs');
 module.exports=require('nRDvnf');
 },{}],"keyMirror":[function(require,module,exports){
 module.exports=require('n1FgJb');
-},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
-module.exports=require('oNOIlC');
+},{}],"SyntheticFocusEvent":[function(require,module,exports){
+module.exports=require('ucaFnA');
 },{}],"ExecutionEnvironment":[function(require,module,exports){
 module.exports=require('mrmvk9');
-},{}],"ReactEventEmitter":[function(require,module,exports){
-module.exports=require('qPIJ8M');
+},{}],"ReactEventEmitterMixin":[function(require,module,exports){
+module.exports=require('cwSdrc');
 },{}],"merge":[function(require,module,exports){
 module.exports=require('7duoWY');
 },{}],"ReactMarkupChecksum":[function(require,module,exports){
@@ -14127,12 +14122,12 @@ module.exports=require('oewMNJ');
 module.exports=require('OHn5BI');
 },{}],"CallbackRegistry":[function(require,module,exports){
 module.exports=require('L1h3na');
-},{}],"ReactDOM":[function(require,module,exports){
-module.exports=require('6GzACJ');
+},{}],"ReactDOMButton":[function(require,module,exports){
+module.exports=require('0sS+Uk');
 },{}],"mergeInto":[function(require,module,exports){
 module.exports=require('1Kx0L6');
-},{}],"SyntheticEvent":[function(require,module,exports){
-module.exports=require('L5ht1h');
+},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
+module.exports=require('oNOIlC');
 },{}],"ReactMultiChild":[function(require,module,exports){
 module.exports=require('UlnLr0');
 },{}],"traverseAllChildren":[function(require,module,exports){
@@ -14145,11 +14140,11 @@ module.exports=require('CoHoju');
 module.exports=require('sWBULG');
 },{}],"ReactOwner":[function(require,module,exports){
 module.exports=require('YwelYh');
-},{}],"ReactEventEmitterMixin":[function(require,module,exports){
-module.exports=require('cwSdrc');
+},{}],"ReactEventTopLevelCallback":[function(require,module,exports){
+module.exports=require('f4CWDK');
 },{}],"ReactDOMOption":[function(require,module,exports){
 module.exports=require('Kfaqkr');
-},{}],"ReactComponentEnvironment":[function(require,module,exports){
-module.exports=require('kOHKbO');
+},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
+module.exports=require('+VDCcA');
 },{}]},{},["1zpOES"])
 ;
