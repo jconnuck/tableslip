@@ -17,7 +17,7 @@
   -moz-transition: background 0.3s, -moz-transform 0.3s;
   transition: background 0.3s, transform 0.3s;
 
-  &:focus, &:hover {
+  &:focus, &:not(.disabled):hover {
     color: white;
   }
 

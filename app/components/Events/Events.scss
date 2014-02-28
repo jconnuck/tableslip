@@ -1,6 +1,8 @@
 @import "Grid.scss";
-@import "isotope.scss";
 
 .Events {
-  margin: 0 auto 1em auto;
+	@include row;
+	position: relative;
+	top: 3em;
+	margin: 0 auto 3em auto;
 }

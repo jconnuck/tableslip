@@ -14,12 +14,25 @@ var Filters = React.createClass({displayName: 'Filters',
     };
   },
 
+  componentDidMount: function () {
+    var events = document.getElementsByClassName('Events')[0];
+    this.iso = new Isotope(events, {
+      itemSelector: '.Tableslip',
+      isInitLayout: false,
+      masonry: {
+        isFitWidth: true
+      }
+    });
+  },
+
   clear: function () {
     this.setState({
       selected: []
     });
 
-    $('.Events').isotope({ filter: ''});
+    this.iso.arrange({
+      filter: ''
+    });
   },
 
   filter: function(keyword, select) {
@@ -34,18 +47,21 @@ var Filters = React.createClass({displayName: 'Filters',
     this.setState({
       selected: selected
     }, function () {
-      var $Events = $('.Events');
       if (this.state.selected.length) {
         var filters = '.' + this.state.selected.join(',.');
-        $Events.isotope({ filter: filters });
+        this.iso.arrange({
+          filter: filters
+        });
+
       } else {
-        $Events.isotope({ filter: ''});
+        this.clear();
       };
     });
   },
 
   render: function () {
-    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (day) {
+    var today = (new Date()).getDay();
+    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (day, i) {
       var selected = this.state.selected.indexOf(day) != -1;
       return Keyword( {selected:selected, name:day, filter:this.filter}, day);
     }.bind(this));

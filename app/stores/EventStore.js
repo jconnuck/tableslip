@@ -63,7 +63,7 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
         var me = response.authResponse.userID;
 
         // Get user's friends events
-        FB.api('/me?fields=friends.fields(events.type(attending).limit(10).fields(id,name,cover,start_time,rsvp_status,parent_group,invited.user(' + me + ')).since(now).until(next\%20week))', function(res) {
+        FB.api('/me?fields=friends.fields(name,events.type(attending).limit(10).fields(id,name,cover,start_time,rsvp_status,parent_group,invited.user(' + me + ')).since(now).until(next\%20week))', function(res) {
           var eventsAttending = {};
           res.friends.data.map(function (friend) {
             if (friend.events) {
@@ -81,13 +81,13 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
                     start_time: event.start_time,
                     invited: !!invited,
                     rsvp_status: rsvp_status,
-                    friendIDs: []
+                    friends: {}
                   };
 
                 }
 
                 eventsAttending[event.id].count += 1;
-                eventsAttending[event.id].friendIDs.push(friend.id);
+                eventsAttending[event.id].friends[friend.id] = friend;
               
               });
 
@@ -106,7 +106,6 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
           });
 
           Dispatcher.publish('serverEvents', {
-            cached: false, 
             events: events 
           });
         });

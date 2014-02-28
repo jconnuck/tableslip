@@ -3,7 +3,7 @@
 @import "Styles";
 @import "ionicons/ionicons";
 
-.Header {
+.Header {  
   .fb-login-button {
     @include column(16);
     position: fixed;

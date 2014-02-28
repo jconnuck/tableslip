@@ -1,6 +1,6 @@
-@import "Grid.scss";
+@import "Grid";
 @import "Colors";
-@import "ionicons/ionicons.scss";
+@import "ionicons/ionicons";
 
 .Filters {
   .keywords {
@@ -12,8 +12,13 @@
     @include column(1);
     @extend .ion-ios7-close-empty;
     color: white;
-    line-height: 3em;
+    // why is this broken? was working w/o !important
+    line-height: 3em !important; 
     background: $light-green;
     text-align: center;
+  }
+
+  .disabled {
+    color: $green;
   }
 }

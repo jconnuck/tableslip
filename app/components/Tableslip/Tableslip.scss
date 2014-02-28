@@ -1,6 +1,7 @@
 @import "Grid";
 @import "Colors";
 @import "Styles";
+@import "hint.css/hint";
 
 .Tableslip {
   text-decoration: none;
@@ -36,6 +37,10 @@
       font-size: .75em;
     }
 
+    .Rsvp {
+      margin-top: 2em;
+    }
+
     .keywords {
       .eventKeyword {
         text-align: center;
@@ -46,14 +51,20 @@
     }
 
     .friends {
-      position: relative;
-      bottom: 2em;
+      position: absolute;
+      bottom: 0;
       color: white;
       margin-top: 3em;
       margin-left: auto;
       margin-right: auto;
 
       .facepile {
+        .tooltip {
+          @extend .hint--right;
+          @extend .hint--rounded;
+          font-family: Arial;
+        }
+
         .profilePic {
           width: 3em;
           height: 3em;
@@ -61,9 +72,11 @@
         }
 
         .count {
+          float: right;
           line-height: 3em;
           vertical-align: top;
           background: $green;
+          font-family: 'GeosansLight';
         }
       }
     }

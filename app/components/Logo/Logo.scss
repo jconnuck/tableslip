@@ -9,14 +9,14 @@
   line-height: 1.5em;
   color: white;
   background-color: $light-green;
-  padding-left: 1em;
-  margin-right: -1em;
+  padding-left: .75em;
+  margin-right: -.75em;
 
   .spinner {
     font-size: .75em;
     margin-right: 1em;
     @extend .ion-loading-c;
-    color: $green;
+    color: white;
 
     &.hide {
       display: auto;

@@ -10,13 +10,17 @@ var Tableslip = React.createClass({
   
   render: function () {
     var date = moment(this.props.event.start_time);
-    var pics = this.props.event.friendIDs.slice(0,3).map(function(friendID) {
-      return <img class="profilePic" src={"https://graph.facebook.com/" + friendID + "/picture"} alt="friend picture"/>;
+    var friends = this.props.event.friends;
+    var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
+      return <span class="tooltip" data-hint={friends[friendID].name}><img class="profilePic" src={"https://graph.facebook.com/" + friendID + "/picture"} alt="friend picture"/></span>;
     });
 
     var more = this.props.event.count - pics.length;
     if (more) {
-      var count = <div class="profilePic count">{"+" + more}</div>
+      var moreFriends = Object.keys(friends).slice(5).map(function(friendID) {
+        return friends[friendID].name;
+      });
+      var count = <span class="tooltip" data-hint={moreFriends.join("\n")}><div class="profilePic count">{"+" + more}</div></span>;
     };
 
     var invited = this.props.event.invited ? " Invited" : "";

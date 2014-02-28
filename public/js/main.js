@@ -13368,12 +13368,12 @@ module.exports=require('K6UoEF');
 module.exports=require('cWvVP8');
 },{}],"mixins/ArbiterMixin":[function(require,module,exports){
 module.exports=require('4vB33x');
-},{}],"EventPluginHub":[function(require,module,exports){
-module.exports=require('EddLdT');
-},{}],"ReactPropTypes":[function(require,module,exports){
-module.exports=require('9axgbZ');
 },{}],"EventPluginRegistry":[function(require,module,exports){
 module.exports=require('bKyk3V');
+},{}],"ReactPropTypes":[function(require,module,exports){
+module.exports=require('9axgbZ');
+},{}],"EventPluginHub":[function(require,module,exports){
+module.exports=require('EddLdT');
 },{}],"1msWMR":[function(require,module,exports){
 var Store = require('Store');
 var Dispatcher = require('Dispatcher');
@@ -13411,12 +13411,10 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
   Dispatcher.subscribe('init', cachedEvents);
 
   var rsvpUpdate = function (data) {
-    console.log(data);
     var eventID = data.eventID;
     var rsvp_status = data.rsvp_status;
 
     FB.api('/' + eventID + '/' + rsvp_status, 'post', function (res) {
-      console.log(res);
       // error if request didn't go through
     });
 
@@ -13442,7 +13440,7 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
         var me = response.authResponse.userID;
 
         // Get user's friends events
-        FB.api('/me?fields=friends.fields(events.type(attending).limit(10).fields(id,name,cover,start_time,rsvp_status,parent_group,invited.user(' + me + ')).since(now).until(next\%20week))', function(res) {
+        FB.api('/me?fields=friends.fields(name,events.type(attending).limit(10).fields(id,name,cover,start_time,rsvp_status,parent_group,invited.user(' + me + ')).since(now).until(next\%20week))', function(res) {
           var eventsAttending = {};
           res.friends.data.map(function (friend) {
             if (friend.events) {
@@ -13460,13 +13458,13 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
                     start_time: event.start_time,
                     invited: !!invited,
                     rsvp_status: rsvp_status,
-                    friendIDs: []
+                    friends: {}
                   };
 
                 }
 
                 eventsAttending[event.id].count += 1;
-                eventsAttending[event.id].friendIDs.push(friend.id);
+                eventsAttending[event.id].friends[friend.id] = friend;
               
               });
 
@@ -13485,7 +13483,6 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
           });
 
           Dispatcher.publish('serverEvents', {
-            cached: false, 
             events: events 
           });
         });
@@ -13510,16 +13507,16 @@ module.exports=require('38o64s');
 module.exports=require('NAAuN8');
 },{}],"EventStore":[function(require,module,exports){
 module.exports=require('1msWMR');
-},{}],"DefaultEventPluginOrder":[function(require,module,exports){
-module.exports=require('rrDzGt');
-},{}],"ReactServerRendering":[function(require,module,exports){
-module.exports=require('JvdSDI');
-},{}],"DefaultDOMPropertyConfig":[function(require,module,exports){
-module.exports=require('lojxFf');
-},{}],"Store":[function(require,module,exports){
-module.exports=require('56S4uO');
 },{}],"Danger":[function(require,module,exports){
 module.exports=require('M4LxPz');
+},{}],"ReactServerRendering":[function(require,module,exports){
+module.exports=require('JvdSDI');
+},{}],"DefaultEventPluginOrder":[function(require,module,exports){
+module.exports=require('rrDzGt');
+},{}],"Store":[function(require,module,exports){
+module.exports=require('56S4uO');
+},{}],"DefaultDOMPropertyConfig":[function(require,module,exports){
+module.exports=require('lojxFf');
 },{}],"ReactTextComponent":[function(require,module,exports){
 module.exports=require('/gjL2v');
 },{}],"DOMPropertyOperations":[function(require,module,exports){
@@ -13532,16 +13529,16 @@ module.exports=require('fduHX3');
 module.exports=require('dwYRw4');
 },{}],"DOMChildrenOperations":[function(require,module,exports){
 module.exports=require('a0oMnh');
-},{}],"keyOf":[function(require,module,exports){
-module.exports=require('Q4rOoG');
+},{}],"objMapKeyVal":[function(require,module,exports){
+module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
 module.exports=require('KJ8HU6');
 },{}],"SimpleEventPlugin":[function(require,module,exports){
 module.exports=require('vsWsrL');
 },{}],"CSSPropertyOperations":[function(require,module,exports){
 module.exports=require('BlPn6+');
-},{}],"objMapKeyVal":[function(require,module,exports){
-module.exports=require('863Jz9');
+},{}],"objMap":[function(require,module,exports){
+module.exports=require('XYM/FC');
 },{}],"$":[function(require,module,exports){
 module.exports=require('9iYy0C');
 },{}],"WLDCvt":[function(require,module,exports){
@@ -13553,17 +13550,6 @@ var Header = require('Header');
 var Events = require('Events');
 
 var EventStore = require('EventStore');
-
-// TEST DATA
-var data = [
-  { "_id" : "516518ec870d1c55125acdc8", "name" : "Documentary Screening Series", "host" : "Ivy Film Festival", "fbEvent" : "258090834327497", "keywords" : [ "free", "movie" ] },
-  { "_id" : "515deb2a866f75765879f6c2", "name" : "Welcome to the Jungle", "host" : "AEPi", "fbEvent" : "508263515875594", "keywords" : [ "party", "free" ] },
-  { "_id" : "515deecd866f75765879f6c3", "name" : "Ivy Film Festival 2013", "host" : "Ivy Film Festival", "fbEvent" : "433862260037924", "keywords" : [ "free", "movie" ] },
-  { "_id" : "5169802a3ecf3c0d0e438111", "name" : "48 Hour Film Festival 2013", "host" : "Ivy Film Festival", "fbEvent" : "296536593784581", "keywords" : [ "free", "movie", "competition" ] },
-  { "_id" : "5169975d3ecf3c0d0e438112", "name" : "Periphery Art Show", "host" : "Artsy Seniors", "fbEvent" : "441666799250736", "keywords" : [ "free", "food", "art" ] },
-  { "name" : "Spring Performance", "host" : "Brown Aerial Arts", "keywords" : [ "dance" ], "fbEvent" : "151452711696458", "_id" : "51745890af625a0000000002" },
-  { "name" : "Outdoor Movie Night", "host" : "Ivy Film Festival", "keywords" : [ "movie", "free", "food" ], "fbEvent" : "640986642585371", "_id" : "51749721af625a0000000003" },
-];
 
 var Application = React.createClass({displayName: 'Application',
   mixins: [ArbiterMixin],
@@ -13601,7 +13587,6 @@ var Application = React.createClass({displayName: 'Application',
 module.exports = Application;
 },{"EventStore":"1msWMR","Events":"FbWSBG","Header":"lPO+H4","React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"FbWSBG":[function(require,module,exports){
 /** @jsx React.DOM */
-
 var React = require('React');
 var ArbiterMixin = require('mixins/ArbiterMixin');
 
@@ -13611,88 +13596,39 @@ var Events = React.createClass({displayName: 'Events',
   mixins: [ArbiterMixin],
 
   componentDidMount: function () {
-    $('.Events').isotope({
-      itemSelector: '.Tableslip'
+    var events = this.refs.Events.getDOMNode();
+    this.iso = new Isotope(events, {
+      isInitLayout: false,
+      itemSelector: '.Tableslip',
+      masonry: {
+        isFitWidth: true
+      }
     });
+
+    this.refresh();
   },
 
   componentDidUpdate: function () {
-    $('.Events').isotope({
-      itemSelector: '.Tableslip'
-    });
+    this.refresh();
+  },
+
+  refresh: function () {
+    this.iso.arrange();
   },
   
   render: function () {
+
     var events = this.props.events.map(function(event) {
       return Tableslip( {event:event});
     });
 
     return (
-      React.DOM.div( {className:"Events"}, 
+      React.DOM.div( {ref:"Events", className:"Events"}, 
         events
       )
     );
   }
 });
-
-// =========== Masonry Centered Layout =============
-$.Isotope.prototype._getCenteredMasonryColumns = function() {
-  this.width = this.element.width();
-  
-  var parentWidth = this.element.parent().width();
-  
-                // i.e. options.masonry && options.masonry.columnWidth
-  var colW = this.options.masonry && this.options.masonry.columnWidth ||
-                // or use the size of the first item
-                this.$filteredAtoms.outerWidth(true) ||
-                // if there's no items, use size of container
-                parentWidth;
-  
-  var cols = Math.floor( parentWidth / colW );
-  cols = Math.max( cols, 1 );
-
-  // i.e. this.masonry.cols = ....
-  this.masonry.cols = cols;
-  // i.e. this.masonry.columnWidth = ...
-  this.masonry.columnWidth = colW;
-};
-
-$.Isotope.prototype._masonryReset = function() {
-  // layout-specific props
-  this.masonry = {};
-  // FIXME shouldn't have to call this again
-  this._getCenteredMasonryColumns();
-  var i = this.masonry.cols;
-  this.masonry.colYs = [];
-  while (i--) {
-    this.masonry.colYs.push( 0 );
-  }
-};
-
-$.Isotope.prototype._masonryResizeChanged = function() {
-  var prevColCount = this.masonry.cols;
-  // get updated colCount
-  this._getCenteredMasonryColumns();
-  return ( this.masonry.cols !== prevColCount );
-};
-
-$.Isotope.prototype._masonryGetContainerSize = function() {
-  var unusedCols = 0,
-      i = this.masonry.cols;
-  // count unused columns
-  while ( --i ) {
-    if ( this.masonry.colYs[i] !== 0 ) {
-      break;
-    }
-    unusedCols++;
-  }
-  
-  return {
-        height : Math.max.apply( Math, this.masonry.colYs ),
-        // fit container to columns that have been used;
-        width : (this.masonry.cols - unusedCols) * this.masonry.columnWidth
-      };
-};
 
 module.exports = Events;
 },{"React":"53xxmY","Tableslip":"BX3Qr7","mixins/ArbiterMixin":"4vB33x"}],"QDHGTP":[function(require,module,exports){
@@ -13712,12 +13648,25 @@ var Filters = React.createClass({displayName: 'Filters',
     };
   },
 
+  componentDidMount: function () {
+    var events = document.getElementsByClassName('Events')[0];
+    this.iso = new Isotope(events, {
+      itemSelector: '.Tableslip',
+      isInitLayout: false,
+      masonry: {
+        isFitWidth: true
+      }
+    });
+  },
+
   clear: function () {
     this.setState({
       selected: []
     });
 
-    $('.Events').isotope({ filter: ''});
+    this.iso.arrange({
+      filter: ''
+    });
   },
 
   filter: function(keyword, select) {
@@ -13732,18 +13681,21 @@ var Filters = React.createClass({displayName: 'Filters',
     this.setState({
       selected: selected
     }, function () {
-      var $Events = $('.Events');
       if (this.state.selected.length) {
         var filters = '.' + this.state.selected.join(',.');
-        $Events.isotope({ filter: filters });
+        this.iso.arrange({
+          filter: filters
+        });
+
       } else {
-        $Events.isotope({ filter: ''});
+        this.clear();
       };
     });
   },
 
   render: function () {
-    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (day) {
+    var today = (new Date()).getDay();
+    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (day, i) {
       var selected = this.state.selected.indexOf(day) != -1;
       return Keyword( {selected:selected, name:day, filter:this.filter}, day);
     }.bind(this));
@@ -13828,14 +13780,17 @@ var Keyword = React.createClass({displayName: 'Keyword',
   mixins: [ArbiterMixin],
 
   select: function () {
-    this.props.filter(this.props.name, !this.props.selected);
+    if (!this.props.disabled) {
+      this.props.filter(this.props.name, !this.props.selected);
+    }
   },
 
   render: function () {
+    var disabled = this.props.disabled ? " disabled" : "";
     var selectedClass = this.props.selected ? " selected" : "";
 
     return (
-      React.DOM.div( {className:"Keyword" + selectedClass, onClick:this.select}, 
+      React.DOM.div( {className:"Keyword" + selectedClass + disabled, onClick:this.select}, 
       this.props.children
       )
     );
@@ -13966,13 +13921,17 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
   
   render: function () {
     var date = moment(this.props.event.start_time);
-    var pics = this.props.event.friendIDs.slice(0,3).map(function(friendID) {
-      return React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", alt:"friend picture"});
+    var friends = this.props.event.friends;
+    var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
+      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", alt:"friend picture"}));
     });
 
     var more = this.props.event.count - pics.length;
     if (more) {
-      var count = React.DOM.div( {className:"profilePic count"}, "+" + more)
+      var moreFriends = Object.keys(friends).slice(5).map(function(friendID) {
+        return friends[friendID].name;
+      });
+      var count = React.DOM.span( {className:"tooltip", 'data-hint':moreFriends.join("\n")}, React.DOM.div( {className:"profilePic count"}, "+" + more));
     };
 
     var invited = this.props.event.invited ? " Invited" : "";
@@ -14005,8 +13964,8 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
 });
 
 module.exports = Tableslip;
-},{"React":"53xxmY","Rsvp":"gq8/iv","mixins/ArbiterMixin":"4vB33x"}],"memoizeStringOnly":[function(require,module,exports){
-module.exports=require('w+d2Nh');
+},{"React":"53xxmY","Rsvp":"gq8/iv","mixins/ArbiterMixin":"4vB33x"}],"keyOf":[function(require,module,exports){
+module.exports=require('Q4rOoG');
 },{}],"Tableslip":[function(require,module,exports){
 module.exports=require('BX3Qr7');
 },{}],"SyntheticMouseEvent":[function(require,module,exports){
@@ -14015,16 +13974,16 @@ module.exports=require('v7zPvJ');
 module.exports=require('oRxGN0');
 },{}],"joinClasses":[function(require,module,exports){
 module.exports=require('odpU/7');
-},{}],"Application":[function(require,module,exports){
-module.exports=require('WLDCvt');
-},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
-module.exports=require('oNOIlC');
 },{}],"Filters":[function(require,module,exports){
 module.exports=require('QDHGTP');
-},{}],"invariant":[function(require,module,exports){
-module.exports=require('hPxNWC');
+},{}],"SyntheticMutationEvent":[function(require,module,exports){
+module.exports=require('FactSb');
 },{}],"Events":[function(require,module,exports){
 module.exports=require('FbWSBG');
+},{}],"invariant":[function(require,module,exports){
+module.exports=require('hPxNWC');
+},{}],"Application":[function(require,module,exports){
+module.exports=require('WLDCvt');
 },{}],"SyntheticTouchEvent":[function(require,module,exports){
 module.exports=require('49cVaj');
 },{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
@@ -14045,16 +14004,16 @@ module.exports=require('AJg5N/');
 module.exports=require('MH4TbT');
 },{}],"Header":[function(require,module,exports){
 module.exports=require('lPO+H4');
-},{}],"forEachAccumulated":[function(require,module,exports){
-module.exports=require('pcy7SL');
+},{}],"ge":[function(require,module,exports){
+module.exports=require('7THwY4');
 },{}],"Keyword":[function(require,module,exports){
 module.exports=require('WIV9q4');
 },{}],"Transaction":[function(require,module,exports){
 module.exports=require('aekoY0');
 },{}],"ReactDOMSelect":[function(require,module,exports){
 module.exports=require('gA/to5');
-},{}],"ge":[function(require,module,exports){
-module.exports=require('7THwY4');
+},{}],"forEachAccumulated":[function(require,module,exports){
+module.exports=require('pcy7SL');
 },{}],"Footer":[function(require,module,exports){
 module.exports=require('ll/2ER');
 },{}],"accumulate":[function(require,module,exports){
@@ -14071,32 +14030,32 @@ module.exports=require('iqoonm');
 module.exports=require('53xxmY');
 },{}],"createObjectFrom":[function(require,module,exports){
 module.exports=require('OocYg9');
-},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
-module.exports=require('+VDCcA');
+},{}],"ReactComponent":[function(require,module,exports){
+module.exports=require('RDDX+O');
 },{}],"dangerousStyleValue":[function(require,module,exports){
 module.exports=require('vbLjBj');
 },{}],"ReactComponentEnvironment":[function(require,module,exports){
 module.exports=require('kOHKbO');
 },{}],"createArrayFrom":[function(require,module,exports){
 module.exports=require('HDEmgB');
-},{}],"ReactDOMForm":[function(require,module,exports){
-module.exports=require('2ZgJdE');
-},{}],"emptyFunction":[function(require,module,exports){
-module.exports=require('RxjlFd');
 },{}],"ReactDOM":[function(require,module,exports){
 module.exports=require('6GzACJ');
+},{}],"emptyFunction":[function(require,module,exports){
+module.exports=require('RxjlFd');
+},{}],"ReactDOMForm":[function(require,module,exports){
+module.exports=require('2ZgJdE');
 },{}],"copyProperties":[function(require,module,exports){
 module.exports=require('M+gx0D');
 },{}],"ReactDOMInput":[function(require,module,exports){
 module.exports=require('e8EEBl');
 },{}],"escapeTextForBrowser":[function(require,module,exports){
 module.exports=require('ZaIegL');
-},{}],"objMap":[function(require,module,exports){
-module.exports=require('XYM/FC');
-},{}],"adler32":[function(require,module,exports){
-module.exports=require('5ukn/R');
 },{}],"mixInto":[function(require,module,exports){
 module.exports=require('qzQld6');
+},{}],"adler32":[function(require,module,exports){
+module.exports=require('5ukn/R');
+},{}],"memoizeStringOnly":[function(require,module,exports){
+module.exports=require('w+d2Nh');
 },{}],"flattenChildren":[function(require,module,exports){
 module.exports=require('cza1WC');
 },{}],"ReactDefaultPerf":[function(require,module,exports){
@@ -14105,16 +14064,16 @@ module.exports=require('MTKS4R');
 module.exports=require('sk6wio');
 },{}],"ReactEventEmitterMixin":[function(require,module,exports){
 module.exports=require('cwSdrc');
-},{}],"getMarkupWrap":[function(require,module,exports){
-module.exports=require('a26iu1');
+},{}],"getEventTarget":[function(require,module,exports){
+module.exports=require('eoIwTT');
 },{}],"ReactInstanceHandles":[function(require,module,exports){
 module.exports=require('owd960');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
 },{}],"ReactMount":[function(require,module,exports){
 module.exports=require('1R+7Eu');
-},{}],"getEventTarget":[function(require,module,exports){
-module.exports=require('eoIwTT');
+},{}],"getMarkupWrap":[function(require,module,exports){
+module.exports=require('a26iu1');
 },{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
 module.exports=require('1fqbih');
 },{}],"ReactInputSelection":[function(require,module,exports){
@@ -14145,8 +14104,8 @@ module.exports=require('ucaFnA');
 module.exports=require('mrmvk9');
 },{}],"ReactEventEmitter":[function(require,module,exports){
 module.exports=require('qPIJ8M');
-},{}],"mergeInto":[function(require,module,exports){
-module.exports=require('1Kx0L6');
+},{}],"merge":[function(require,module,exports){
+module.exports=require('7duoWY');
 },{}],"ReactMarkupChecksum":[function(require,module,exports){
 module.exports=require('TUHHsM');
 },{}],"EventListener":[function(require,module,exports){
@@ -14157,14 +14116,14 @@ module.exports=require('g13zJS');
 module.exports=require('oewMNJ');
 },{}],"MobileSafariClickEventPlugin":[function(require,module,exports){
 module.exports=require('OHn5BI');
-},{}],"CSSProperty":[function(require,module,exports){
-module.exports=require('sWBULG');
+},{}],"CallbackRegistry":[function(require,module,exports){
+module.exports=require('L1h3na');
 },{}],"ReactDOMButton":[function(require,module,exports){
 module.exports=require('0sS+Uk');
-},{}],"merge":[function(require,module,exports){
-module.exports=require('7duoWY');
-},{}],"SyntheticMutationEvent":[function(require,module,exports){
-module.exports=require('FactSb');
+},{}],"mergeInto":[function(require,module,exports){
+module.exports=require('1Kx0L6');
+},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
+module.exports=require('oNOIlC');
 },{}],"ReactMultiChild":[function(require,module,exports){
 module.exports=require('UlnLr0');
 },{}],"traverseAllChildren":[function(require,module,exports){
@@ -14173,15 +14132,15 @@ module.exports=require('27ud2W');
 module.exports=require('HPHWXz');
 },{}],"performanceNow":[function(require,module,exports){
 module.exports=require('CoHoju');
-},{}],"CallbackRegistry":[function(require,module,exports){
-module.exports=require('L1h3na');
+},{}],"CSSProperty":[function(require,module,exports){
+module.exports=require('sWBULG');
 },{}],"ReactOwner":[function(require,module,exports){
 module.exports=require('YwelYh');
 },{}],"ReactEventTopLevelCallback":[function(require,module,exports){
 module.exports=require('f4CWDK');
 },{}],"ReactDOMOption":[function(require,module,exports){
 module.exports=require('Kfaqkr');
-},{}],"ReactComponent":[function(require,module,exports){
-module.exports=require('RDDX+O');
+},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
+module.exports=require('+VDCcA');
 },{}]},{},["1zpOES"])
 ;
