@@ -13441,8 +13441,19 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
 
   var fbLoaded = function () {
     // Additional init code here
+    FB.getLoginStatus(function (response) {
+      EventStore.publish('loginChange', {
+        loggedIn: response.status 
+      });
+    });
+
     FB.Event.subscribe('auth.authResponseChange', function (response) {
+      EventStore.publish('loginChange', {
+        loggedIn: response.status
+      });
+
       if (response.status === 'connected') {
+
         var me = response.authResponse.userID;
 
         // Get user's friends events
@@ -13531,12 +13542,12 @@ module.exports=require('/gjL2v');
 module.exports=require('n+MrOf');
 },{}],"Dispatcher":[function(require,module,exports){
 module.exports=require('Jxf8r5');
-},{}],"DOMProperty":[function(require,module,exports){
-module.exports=require('fduHX3');
-},{}],"ReactUpdates":[function(require,module,exports){
-module.exports=require('dwYRw4');
 },{}],"DOMChildrenOperations":[function(require,module,exports){
 module.exports=require('a0oMnh');
+},{}],"ReactUpdates":[function(require,module,exports){
+module.exports=require('dwYRw4');
+},{}],"DOMProperty":[function(require,module,exports){
+module.exports=require('fduHX3');
 },{}],"objMapKeyVal":[function(require,module,exports){
 module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
@@ -13564,7 +13575,8 @@ var Application = React.createClass({displayName: 'Application',
 
   getInitialState: function () {
     return {
-      events: []
+      events: [],
+      loggedIn: 'connected'
     };
   },
 
@@ -13573,19 +13585,29 @@ var Application = React.createClass({displayName: 'Application',
 
     EventStore.subscribe('loadedEvents', this.loadedEvents);
     EventStore.subscribe('rsvpUpdate', this.rsvpUpdate);
+    EventStore.subscribe('loginChange', this.handleLoginChange);
   },
 
   loadedEvents: function (payload) {
-    var events = payload.events.slice(0,40);
+    var events = payload.events.slice(0,60);
     this.setState({
       events: events
     });
   },
+
+  handleLoginChange: function (payload) {
+    var loggedIn = payload.loggedIn;
+    this.setState({
+      loggedIn : loggedIn
+    });
+  },
   
   render: function () {
+    var loginClass = "loginNotice " + (this.state.loggedIn === 'connected' ? "hide" : "");
     return (
       React.DOM.div( {className:"Application"}, 
         Header(null ),
+        React.DOM.h1( {className:loginClass}, "Login to Facebook to see upcoming events"),
         Events( {events:this.state.events})
       )
     );
@@ -13812,6 +13834,7 @@ var Logo = React.createClass({displayName: 'Logo',
   mixins: [ArbiterMixin],
 
   componentWillMount: function () {
+    EventStore.subscribe('loginChange', this.handleLoginChange);
     EventStore.subscribe('loadedEvents', this.handleLoadedEvents);
   },
 
@@ -13828,9 +13851,16 @@ var Logo = React.createClass({displayName: 'Logo',
       });
     }
   },
+
+  handleLoginChange: function (payload) {
+    var loggedIn = payload.loggedIn;
+    this.setState({
+      loggedIn : loggedIn
+    });
+  },
   
   render: function () {
-    var spinnerClass = "spinner " + (this.state.loadedEvents ? "hide" : "");
+    var spinnerClass = "spinner " + (this.state.loggedIn !== 'connected' || this.state.loadedEvents ? "hide" : "");
 
     return (
       React.DOM.div( {className:"Logo"}, 
@@ -13946,11 +13976,13 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
       };
     }
 
+    var name = this.props.event.name.length > 120 ? this.props.event.name.substring(0,120) + '. . .' : this.props.event.name;
+
     return (
       React.DOM.a( {href:"http://www.facebook.com/" + this.props.event.id, className:"Tableslip " + date.format('ddd') + invited}, 
         React.DOM.div( {className:"background", style:backgroundStyle} ),
         React.DOM.div( {className:"foreground"}, 
-          React.DOM.div( {className:"name"}, this.props.event.name),
+          React.DOM.div( {className:"name"}, name),
           React.DOM.div( {className:"group"}, this.props.event.parent_group),
           React.DOM.div( {className:"day"}, date.format('dddd MMMM Do')),
           React.DOM.div( {className:"time"}, date.format('h:mm a')),
@@ -13984,16 +14016,16 @@ module.exports=require('FbWSBG');
 module.exports=require('FactSb');
 },{}],"Filters":[function(require,module,exports){
 module.exports=require('QDHGTP');
-},{}],"hyphenate":[function(require,module,exports){
-module.exports=require('lqHdFC');
+},{}],"invariant":[function(require,module,exports){
+module.exports=require('hPxNWC');
 },{}],"Application":[function(require,module,exports){
 module.exports=require('WLDCvt');
 },{}],"SyntheticTouchEvent":[function(require,module,exports){
 module.exports=require('49cVaj');
 },{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
 module.exports=require('FN7wZd');
-},{}],"invariant":[function(require,module,exports){
-module.exports=require('hPxNWC');
+},{}],"hyphenate":[function(require,module,exports){
+module.exports=require('lqHdFC');
 },{}],"Rsvp":[function(require,module,exports){
 module.exports=require('gq8/iv');
 },{}],"SyntheticUIEvent":[function(require,module,exports){
@@ -14066,12 +14098,12 @@ module.exports=require('cza1WC');
 module.exports=require('MTKS4R');
 },{}],"ViewportMetrics":[function(require,module,exports){
 module.exports=require('sk6wio');
-},{}],"ReactEventEmitter":[function(require,module,exports){
-module.exports=require('qPIJ8M');
+},{}],"ReactEventEmitterMixin":[function(require,module,exports){
+module.exports=require('cwSdrc');
 },{}],"getEventTarget":[function(require,module,exports){
 module.exports=require('eoIwTT');
-},{}],"ReactInstanceHandles":[function(require,module,exports){
-module.exports=require('owd960');
+},{}],"ReactMarkupChecksum":[function(require,module,exports){
+module.exports=require('TUHHsM');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
 },{}],"ReactMount":[function(require,module,exports){
@@ -14106,12 +14138,12 @@ module.exports=require('n1FgJb');
 module.exports=require('ucaFnA');
 },{}],"ExecutionEnvironment":[function(require,module,exports){
 module.exports=require('mrmvk9');
-},{}],"ReactEventEmitterMixin":[function(require,module,exports){
-module.exports=require('cwSdrc');
+},{}],"ReactEventEmitter":[function(require,module,exports){
+module.exports=require('qPIJ8M');
 },{}],"merge":[function(require,module,exports){
 module.exports=require('7duoWY');
-},{}],"ReactMarkupChecksum":[function(require,module,exports){
-module.exports=require('TUHHsM');
+},{}],"ReactInstanceHandles":[function(require,module,exports){
+module.exports=require('owd960');
 },{}],"EventListener":[function(require,module,exports){
 module.exports=require('e0NKSL');
 },{}],"ReactNativeComponent":[function(require,module,exports){

@@ -71,6 +71,12 @@ body {
 .Application {
   font-family: 'GeosansLight';
   font-weight: 400; }
+  .Application .loginNotice {
+    color: #415caa;
+    position: relative;
+    top: 4em;
+    text-align: center;
+    font-size: 1em; }
 
 body {
   width: 100%;
@@ -7074,7 +7080,8 @@ body {
     height: inherit;
     width: inherit;
     position: absolute;
-    display: block; }
+    display: block;
+    z-index: -200; }
   .Tableslip .foreground {
     margin: 1em;
     height: 288px;

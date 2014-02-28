@@ -31,11 +31,13 @@ var Tableslip = React.createClass({
       };
     }
 
+    var name = this.props.event.name.length > 120 ? this.props.event.name.substring(0,120) + '. . .' : this.props.event.name;
+
     return (
       <a href={"http://www.facebook.com/" + this.props.event.id} class={"Tableslip " + date.format('ddd') + invited}>
         <div class="background" style={backgroundStyle} />
         <div class="foreground">
-          <div class="name">{this.props.event.name}</div>
+          <div class="name">{name}</div>
           <div class="group">{this.props.event.parent_group}</div>
           <div class="day">{date.format('dddd MMMM Do')}</div>
           <div class="time">{date.format('h:mm a')}</div>

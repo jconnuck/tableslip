@@ -7,6 +7,7 @@ var Logo = React.createClass({displayName: 'Logo',
   mixins: [ArbiterMixin],
 
   componentWillMount: function () {
+    EventStore.subscribe('loginChange', this.handleLoginChange);
     EventStore.subscribe('loadedEvents', this.handleLoadedEvents);
   },
 
@@ -23,9 +24,16 @@ var Logo = React.createClass({displayName: 'Logo',
       });
     }
   },
+
+  handleLoginChange: function (payload) {
+    var loggedIn = payload.loggedIn;
+    this.setState({
+      loggedIn : loggedIn
+    });
+  },
   
   render: function () {
-    var spinnerClass = "spinner " + (this.state.loadedEvents ? "hide" : "");
+    var spinnerClass = "spinner " + (this.state.loggedIn !== 'connected' || this.state.loadedEvents ? "hide" : "");
 
     return (
       React.DOM.div( {className:"Logo"}, 

@@ -64,8 +64,19 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
 
   var fbLoaded = function () {
     // Additional init code here
+    FB.getLoginStatus(function (response) {
+      EventStore.publish('loginChange', {
+        loggedIn: response.status 
+      });
+    });
+
     FB.Event.subscribe('auth.authResponseChange', function (response) {
+      EventStore.publish('loginChange', {
+        loggedIn: response.status
+      });
+
       if (response.status === 'connected') {
+
         var me = response.authResponse.userID;
 
         // Get user's friends events

@@ -19,6 +19,7 @@
     width: inherit;
     position: absolute;
     display: block;
+    z-index: -200;
   }
 
   .foreground {
@@ -26,7 +27,6 @@
     height: 288px;
     background: rgba(255,255,255,.95);
     position: relative;
-
 
     .name {
       font-size: 1.25em;

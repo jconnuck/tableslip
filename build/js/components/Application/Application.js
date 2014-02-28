@@ -12,7 +12,8 @@ var Application = React.createClass({displayName: 'Application',
 
   getInitialState: function () {
     return {
-      events: []
+      events: [],
+      loggedIn: 'connected'
     };
   },
 
@@ -21,19 +22,29 @@ var Application = React.createClass({displayName: 'Application',
 
     EventStore.subscribe('loadedEvents', this.loadedEvents);
     EventStore.subscribe('rsvpUpdate', this.rsvpUpdate);
+    EventStore.subscribe('loginChange', this.handleLoginChange);
   },
 
   loadedEvents: function (payload) {
-    var events = payload.events.slice(0,40);
+    var events = payload.events.slice(0,60);
     this.setState({
       events: events
     });
   },
+
+  handleLoginChange: function (payload) {
+    var loggedIn = payload.loggedIn;
+    this.setState({
+      loggedIn : loggedIn
+    });
+  },
   
   render: function () {
+    var loginClass = "loginNotice " + (this.state.loggedIn === 'connected' ? "hide" : "");
     return (
       React.DOM.div( {className:"Application"}, 
         Header(null ),
+        React.DOM.h1( {className:loginClass}, "Login to Facebook to see upcoming events"),
         Events( {events:this.state.events})
       )
     );

@@ -13441,8 +13441,19 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
 
   var fbLoaded = function () {
     // Additional init code here
+    FB.getLoginStatus(function (response) {
+      EventStore.publish('loginChange', {
+        loggedIn: response.status 
+      });
+    });
+
     FB.Event.subscribe('auth.authResponseChange', function (response) {
+      EventStore.publish('loginChange', {
+        loggedIn: response.status
+      });
+
       if (response.status === 'connected') {
+
         var me = response.authResponse.userID;
 
         // Get user's friends events
@@ -13541,8 +13552,8 @@ module.exports=require('a0oMnh');
 module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
 module.exports=require('KJ8HU6');
-},{}],"SyntheticEvent":[function(require,module,exports){
-module.exports=require('L5ht1h');
+},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
+module.exports=require('oNOIlC');
 },{}],"CSSPropertyOperations":[function(require,module,exports){
 module.exports=require('BlPn6+');
 },{}],"objMap":[function(require,module,exports){
@@ -13564,7 +13575,8 @@ var Application = React.createClass({displayName: 'Application',
 
   getInitialState: function () {
     return {
-      events: []
+      events: [],
+      loggedIn: 'connected'
     };
   },
 
@@ -13573,19 +13585,29 @@ var Application = React.createClass({displayName: 'Application',
 
     EventStore.subscribe('loadedEvents', this.loadedEvents);
     EventStore.subscribe('rsvpUpdate', this.rsvpUpdate);
+    EventStore.subscribe('loginChange', this.handleLoginChange);
   },
 
   loadedEvents: function (payload) {
-    var events = payload.events.slice(0,40);
+    var events = payload.events.slice(0,60);
     this.setState({
       events: events
     });
   },
+
+  handleLoginChange: function (payload) {
+    var loggedIn = payload.loggedIn;
+    this.setState({
+      loggedIn : loggedIn
+    });
+  },
   
   render: function () {
+    var loginClass = "loginNotice " + (this.state.loggedIn === 'connected' ? "hide" : "");
     return (
       React.DOM.div( {className:"Application"}, 
         Header(null ),
+        React.DOM.h1( {className:loginClass}, "Login to Facebook to see upcoming events"),
         Events( {events:this.state.events})
       )
     );
@@ -13812,6 +13834,7 @@ var Logo = React.createClass({displayName: 'Logo',
   mixins: [ArbiterMixin],
 
   componentWillMount: function () {
+    EventStore.subscribe('loginChange', this.handleLoginChange);
     EventStore.subscribe('loadedEvents', this.handleLoadedEvents);
   },
 
@@ -13828,9 +13851,16 @@ var Logo = React.createClass({displayName: 'Logo',
       });
     }
   },
+
+  handleLoginChange: function (payload) {
+    var loggedIn = payload.loggedIn;
+    this.setState({
+      loggedIn : loggedIn
+    });
+  },
   
   render: function () {
-    var spinnerClass = "spinner " + (this.state.loadedEvents ? "hide" : "");
+    var spinnerClass = "spinner " + (this.state.loggedIn !== 'connected' || this.state.loadedEvents ? "hide" : "");
 
     return (
       React.DOM.div( {className:"Logo"}, 
@@ -13910,8 +13940,8 @@ var Rsvp = React.createClass({displayName: 'Rsvp',
 });
 
 module.exports = Rsvp;
-},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticFocusEvent":[function(require,module,exports){
-module.exports=require('ucaFnA');
+},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticMutationEvent":[function(require,module,exports){
+module.exports=require('FactSb');
 },{}],"BX3Qr7":[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -13946,11 +13976,13 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
       };
     }
 
+    var name = this.props.event.name.length > 120 ? this.props.event.name.substring(0,120) + '. . .' : this.props.event.name;
+
     return (
       React.DOM.a( {href:"http://www.facebook.com/" + this.props.event.id, className:"Tableslip " + date.format('ddd') + invited}, 
         React.DOM.div( {className:"background", style:backgroundStyle} ),
         React.DOM.div( {className:"foreground"}, 
-          React.DOM.div( {className:"name"}, this.props.event.name),
+          React.DOM.div( {className:"name"}, name),
           React.DOM.div( {className:"group"}, this.props.event.parent_group),
           React.DOM.div( {className:"day"}, date.format('dddd MMMM Do')),
           React.DOM.div( {className:"time"}, date.format('h:mm a')),
@@ -13972,164 +14004,164 @@ module.exports = Tableslip;
 module.exports=require('Q4rOoG');
 },{}],"Tableslip":[function(require,module,exports){
 module.exports=require('BX3Qr7');
-},{}],"SyntheticMutationEvent":[function(require,module,exports){
-module.exports=require('FactSb');
-},{}],"ReactDefaultPerf":[function(require,module,exports){
-module.exports=require('MTKS4R');
+},{}],"SyntheticEvent":[function(require,module,exports){
+module.exports=require('L5ht1h');
+},{}],"ReactDOMInput":[function(require,module,exports){
+module.exports=require('e8EEBl');
 },{}],"joinClasses":[function(require,module,exports){
 module.exports=require('odpU/7');
 },{}],"Events":[function(require,module,exports){
 module.exports=require('FbWSBG');
 },{}],"SyntheticTouchEvent":[function(require,module,exports){
 module.exports=require('49cVaj');
-},{}],"Application":[function(require,module,exports){
-module.exports=require('WLDCvt');
-},{}],"invariant":[function(require,module,exports){
-module.exports=require('hPxNWC');
 },{}],"Filters":[function(require,module,exports){
 module.exports=require('QDHGTP');
+},{}],"invariant":[function(require,module,exports){
+module.exports=require('hPxNWC');
+},{}],"Application":[function(require,module,exports){
+module.exports=require('WLDCvt');
 },{}],"SyntheticUIEvent":[function(require,module,exports){
 module.exports=require('unRgeP');
-},{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
-module.exports=require('FN7wZd');
+},{}],"ReactDefaultInjection":[function(require,module,exports){
+module.exports=require('oRxGN0');
 },{}],"hyphenate":[function(require,module,exports){
 module.exports=require('lqHdFC');
 },{}],"Rsvp":[function(require,module,exports){
 module.exports=require('gq8/iv');
 },{}],"SyntheticWheelEvent":[function(require,module,exports){
 module.exports=require('MH4TbT');
-},{}],"ReactDefaultInjection":[function(require,module,exports){
-module.exports=require('oRxGN0');
+},{}],"ReactDOMSelect":[function(require,module,exports){
+module.exports=require('gA/to5');
 },{}],"getReactRootElementInContainer":[function(require,module,exports){
 module.exports=require('sz+OE9');
-},{}],"Logo":[function(require,module,exports){
-module.exports=require('AJg5N/');
+},{}],"Keyword":[function(require,module,exports){
+module.exports=require('WIV9q4');
 },{}],"accumulate":[function(require,module,exports){
 module.exports=require('rpm6kU');
 },{}],"Header":[function(require,module,exports){
 module.exports=require('lPO+H4');
 },{}],"ge":[function(require,module,exports){
 module.exports=require('7THwY4');
-},{}],"Keyword":[function(require,module,exports){
-module.exports=require('WIV9q4');
-},{}],"createNodesFromMarkup":[function(require,module,exports){
-module.exports=require('iqoonm');
-},{}],"ReactDOMSelect":[function(require,module,exports){
-module.exports=require('gA/to5');
-},{}],"forEachAccumulated":[function(require,module,exports){
-module.exports=require('pcy7SL');
 },{}],"Footer":[function(require,module,exports){
 module.exports=require('ll/2ER');
-},{}],"dangerousStyleValue":[function(require,module,exports){
-module.exports=require('vbLjBj');
+},{}],"Transaction":[function(require,module,exports){
+module.exports=require('aekoY0');
+},{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
+module.exports=require('FN7wZd');
+},{}],"forEachAccumulated":[function(require,module,exports){
+module.exports=require('pcy7SL');
+},{}],"Logo":[function(require,module,exports){
+module.exports=require('AJg5N/');
+},{}],"createNodesFromMarkup":[function(require,module,exports){
+module.exports=require('iqoonm');
 },{}],"main":[function(require,module,exports){
 module.exports=require('1zpOES');
 },{}],"ex":[function(require,module,exports){
 module.exports=require('bHKEgX');
-},{}],"MobileSafariClickEventPlugin":[function(require,module,exports){
-module.exports=require('OHn5BI');
-},{}],"emptyFunction":[function(require,module,exports){
-module.exports=require('RxjlFd');
 },{}],"EventPropagators":[function(require,module,exports){
 module.exports=require('n/zMdI');
-},{}],"createObjectFrom":[function(require,module,exports){
-module.exports=require('OocYg9');
-},{}],"ReactComponent":[function(require,module,exports){
-module.exports=require('RDDX+O');
-},{}],"Transaction":[function(require,module,exports){
-module.exports=require('aekoY0');
+},{}],"emptyFunction":[function(require,module,exports){
+module.exports=require('RxjlFd');
+},{}],"ReactChildren":[function(require,module,exports){
+module.exports=require('7bESex');
+},{}],"adler32":[function(require,module,exports){
+module.exports=require('5ukn/R');
+},{}],"React":[function(require,module,exports){
+module.exports=require('53xxmY');
+},{}],"dangerousStyleValue":[function(require,module,exports){
+module.exports=require('vbLjBj');
 },{}],"ReactComponentEnvironment":[function(require,module,exports){
 module.exports=require('kOHKbO');
 },{}],"createArrayFrom":[function(require,module,exports){
 module.exports=require('HDEmgB');
 },{}],"ReactDOM":[function(require,module,exports){
 module.exports=require('6GzACJ');
-},{}],"ReactDOMTextarea":[function(require,module,exports){
-module.exports=require('omUt5u');
-},{}],"ReactDOMForm":[function(require,module,exports){
-module.exports=require('2ZgJdE');
-},{}],"copyProperties":[function(require,module,exports){
-module.exports=require('M+gx0D');
-},{}],"ReactDOMInput":[function(require,module,exports){
-module.exports=require('e8EEBl');
 },{}],"escapeTextForBrowser":[function(require,module,exports){
 module.exports=require('ZaIegL');
-},{}],"mixInto":[function(require,module,exports){
-module.exports=require('qzQld6');
-},{}],"adler32":[function(require,module,exports){
-module.exports=require('5ukn/R');
-},{}],"memoizeStringOnly":[function(require,module,exports){
-module.exports=require('w+d2Nh');
+},{}],"ReactDOMForm":[function(require,module,exports){
+module.exports=require('2ZgJdE');
+},{}],"createObjectFrom":[function(require,module,exports){
+module.exports=require('OocYg9');
+},{}],"ReactDOMOption":[function(require,module,exports){
+module.exports=require('Kfaqkr');
 },{}],"flattenChildren":[function(require,module,exports){
 module.exports=require('cza1WC');
-},{}],"ReactEventEmitter":[function(require,module,exports){
-module.exports=require('qPIJ8M');
-},{}],"ViewportMetrics":[function(require,module,exports){
-module.exports=require('sk6wio');
-},{}],"ReactEventTopLevelCallback":[function(require,module,exports){
-module.exports=require('f4CWDK');
+},{}],"mixInto":[function(require,module,exports){
+module.exports=require('qzQld6');
+},{}],"copyProperties":[function(require,module,exports){
+module.exports=require('M+gx0D');
+},{}],"memoizeStringOnly":[function(require,module,exports){
+module.exports=require('w+d2Nh');
 },{}],"getEventTarget":[function(require,module,exports){
 module.exports=require('eoIwTT');
+},{}],"ReactDefaultPerf":[function(require,module,exports){
+module.exports=require('MTKS4R');
+},{}],"ViewportMetrics":[function(require,module,exports){
+module.exports=require('sk6wio');
+},{}],"ReactEventEmitterMixin":[function(require,module,exports){
+module.exports=require('cwSdrc');
+},{}],"getMarkupWrap":[function(require,module,exports){
+module.exports=require('a26iu1');
 },{}],"ReactMarkupChecksum":[function(require,module,exports){
 module.exports=require('TUHHsM');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
 },{}],"ReactMultiChild":[function(require,module,exports){
 module.exports=require('UlnLr0');
-},{}],"getMarkupWrap":[function(require,module,exports){
-module.exports=require('a26iu1');
-},{}],"ReactNativeComponent":[function(require,module,exports){
-module.exports=require('g13zJS');
-},{}],"ReactInputSelection":[function(require,module,exports){
-module.exports=require('eT7xLu');
-},{}],"ReactOwner":[function(require,module,exports){
-module.exports=require('YwelYh');
 },{}],"getTextContentAccessor":[function(require,module,exports){
 module.exports=require('Suh93r');
+},{}],"ReactPropTransferer":[function(require,module,exports){
+module.exports=require('K6UoEF');
+},{}],"ReactInputSelection":[function(require,module,exports){
+module.exports=require('eT7xLu');
+},{}],"ReactMount":[function(require,module,exports){
+module.exports=require('1R+7Eu');
+},{}],"isEventSupported":[function(require,module,exports){
+module.exports=require('Iv78kc');
 },{}],"EventPluginUtils":[function(require,module,exports){
 module.exports=require('K4QB+L');
 },{}],"ReactCurrentOwner":[function(require,module,exports){
 module.exports=require('j7aNlU');
-},{}],"React":[function(require,module,exports){
-module.exports=require('53xxmY');
-},{}],"isEventSupported":[function(require,module,exports){
-module.exports=require('Iv78kc');
+},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
+module.exports=require('+VDCcA');
+},{}],"keyMirror":[function(require,module,exports){
+module.exports=require('n1FgJb');
 },{}],"ReactCompositeComponent":[function(require,module,exports){
 module.exports=require('nAvIQF');
 },{}],"PooledClass":[function(require,module,exports){
 module.exports=require('5mz1Gs');
 },{}],"ReactDOMIDOperations":[function(require,module,exports){
 module.exports=require('nRDvnf');
-},{}],"keyMirror":[function(require,module,exports){
-module.exports=require('n1FgJb');
-},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
-module.exports=require('oNOIlC');
+},{}],"mergeHelpers":[function(require,module,exports){
+module.exports=require('oewMNJ');
+},{}],"SyntheticMouseEvent":[function(require,module,exports){
+module.exports=require('v7zPvJ');
 },{}],"ExecutionEnvironment":[function(require,module,exports){
 module.exports=require('mrmvk9');
-},{}],"ReactEventEmitterMixin":[function(require,module,exports){
-module.exports=require('cwSdrc');
+},{}],"ReactEventEmitter":[function(require,module,exports){
+module.exports=require('qPIJ8M');
 },{}],"merge":[function(require,module,exports){
 module.exports=require('7duoWY');
-},{}],"ReactMount":[function(require,module,exports){
-module.exports=require('1R+7Eu');
+},{}],"ReactEventTopLevelCallback":[function(require,module,exports){
+module.exports=require('f4CWDK');
 },{}],"EventListener":[function(require,module,exports){
 module.exports=require('e0NKSL');
 },{}],"ReactOnDOMReady":[function(require,module,exports){
 module.exports=require('rkZBuo');
 },{}],"mergeInto":[function(require,module,exports){
 module.exports=require('1Kx0L6');
-},{}],"ReactChildren":[function(require,module,exports){
-module.exports=require('7bESex');
+},{}],"MobileSafariClickEventPlugin":[function(require,module,exports){
+module.exports=require('OHn5BI');
 },{}],"CallbackRegistry":[function(require,module,exports){
 module.exports=require('L1h3na');
 },{}],"ReactDOMButton":[function(require,module,exports){
 module.exports=require('0sS+Uk');
-},{}],"mergeHelpers":[function(require,module,exports){
-module.exports=require('oewMNJ');
-},{}],"SyntheticMouseEvent":[function(require,module,exports){
-module.exports=require('v7zPvJ');
-},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
-module.exports=require('1fqbih');
+},{}],"ReactNativeComponent":[function(require,module,exports){
+module.exports=require('g13zJS');
+},{}],"SyntheticFocusEvent":[function(require,module,exports){
+module.exports=require('ucaFnA');
+},{}],"ReactOwner":[function(require,module,exports){
+module.exports=require('YwelYh');
 },{}],"traverseAllChildren":[function(require,module,exports){
 module.exports=require('27ud2W');
 },{}],"Lawnchair":[function(require,module,exports){
@@ -14138,13 +14170,13 @@ module.exports=require('HPHWXz');
 module.exports=require('CoHoju');
 },{}],"CSSProperty":[function(require,module,exports){
 module.exports=require('sWBULG');
-},{}],"ReactPropTransferer":[function(require,module,exports){
-module.exports=require('K6UoEF');
+},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
+module.exports=require('1fqbih');
 },{}],"ReactInstanceHandles":[function(require,module,exports){
 module.exports=require('owd960');
-},{}],"ReactDOMOption":[function(require,module,exports){
-module.exports=require('Kfaqkr');
-},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
-module.exports=require('+VDCcA');
+},{}],"ReactDOMTextarea":[function(require,module,exports){
+module.exports=require('omUt5u');
+},{}],"ReactComponent":[function(require,module,exports){
+module.exports=require('RDDX+O');
 },{}]},{},["1zpOES"])
 ;
