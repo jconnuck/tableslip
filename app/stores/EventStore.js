@@ -56,6 +56,12 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
 
   Dispatcher.subscribe('rsvp', rsvpUpdate)
 
+  var logOut = function () {
+    EventStore.nuke(function () {
+      EventStore.publish('loadedEvents', {events:[]});
+    });
+  };
+
   var fbLoaded = function () {
     // Additional init code here
     FB.Event.subscribe('auth.authResponseChange', function (response) {
@@ -110,8 +116,10 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
           });
         });
       } else if (response.status === 'not_authorized') {
+        logOut();
         FB.login(function(response) {}, {scope: 'user_events, friends_events'});
       } else {
+        logOut();
         FB.login(function(response) {}, {scope: 'user_events, friends_events'});       
       }
     });
