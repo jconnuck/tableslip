@@ -25,6 +25,7 @@ var Events = React.createClass({displayName: 'Events',
   },
 
   refresh: function () {
+    this.iso.reloadItems();
     this.iso.arrange();
   },
   
