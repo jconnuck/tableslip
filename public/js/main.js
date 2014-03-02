@@ -977,6 +977,7 @@ var Store = require('Lawnchair');
 
 Store.prototype.publish = Arbiter.publish;
 Store.prototype.subscribe = Arbiter.subscribe;
+Store.prototype.unsubscribe = Arbiter.unsubscribe;
 
 module.exports = Store;
 },{"Arbiter":"cWvVP8","Lawnchair":"HPHWXz"}],"1zpOES":[function(require,module,exports){
@@ -13538,16 +13539,16 @@ module.exports=require('56S4uO');
 module.exports=require('M4LxPz');
 },{}],"ReactTextComponent":[function(require,module,exports){
 module.exports=require('/gjL2v');
-},{}],"DOMPropertyOperations":[function(require,module,exports){
-module.exports=require('n+MrOf');
-},{}],"Dispatcher":[function(require,module,exports){
-module.exports=require('Jxf8r5');
-},{}],"DOMChildrenOperations":[function(require,module,exports){
-module.exports=require('a0oMnh');
-},{}],"ReactUpdates":[function(require,module,exports){
-module.exports=require('dwYRw4');
 },{}],"DOMProperty":[function(require,module,exports){
 module.exports=require('fduHX3');
+},{}],"Dispatcher":[function(require,module,exports){
+module.exports=require('Jxf8r5');
+},{}],"DOMPropertyOperations":[function(require,module,exports){
+module.exports=require('n+MrOf');
+},{}],"ReactUpdates":[function(require,module,exports){
+module.exports=require('dwYRw4');
+},{}],"DOMChildrenOperations":[function(require,module,exports){
+module.exports=require('a0oMnh');
 },{}],"objMapKeyVal":[function(require,module,exports){
 module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
@@ -13955,7 +13956,7 @@ var Tableslip = React.createClass({displayName: 'Tableslip',
   
   render: function () {
     var date = moment(this.props.event.start_time);
-    var friends = this.props.event.friends;
+    var friends = this.props.event.friends || {};
     var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
       return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", alt:"friend picture"}));
     });
@@ -14102,8 +14103,8 @@ module.exports=require('sk6wio');
 module.exports=require('cwSdrc');
 },{}],"getEventTarget":[function(require,module,exports){
 module.exports=require('eoIwTT');
-},{}],"ReactMarkupChecksum":[function(require,module,exports){
-module.exports=require('TUHHsM');
+},{}],"ReactInstanceHandles":[function(require,module,exports){
+module.exports=require('owd960');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
 },{}],"ReactMount":[function(require,module,exports){
@@ -14142,8 +14143,8 @@ module.exports=require('mrmvk9');
 module.exports=require('qPIJ8M');
 },{}],"merge":[function(require,module,exports){
 module.exports=require('7duoWY');
-},{}],"ReactInstanceHandles":[function(require,module,exports){
-module.exports=require('owd960');
+},{}],"ReactMarkupChecksum":[function(require,module,exports){
+module.exports=require('TUHHsM');
 },{}],"EventListener":[function(require,module,exports){
 module.exports=require('e0NKSL');
 },{}],"ReactNativeComponent":[function(require,module,exports){

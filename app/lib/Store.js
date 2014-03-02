@@ -5,5 +5,6 @@ var Store = require('Lawnchair');
 
 Store.prototype.publish = Arbiter.publish;
 Store.prototype.subscribe = Arbiter.subscribe;
+Store.prototype.unsubscribe = Arbiter.unsubscribe;
 
 module.exports = Store;

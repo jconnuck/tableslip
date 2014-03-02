@@ -10,7 +10,7 @@ var Tableslip = React.createClass({
   
   render: function () {
     var date = moment(this.props.event.start_time);
-    var friends = this.props.event.friends;
+    var friends = this.props.event.friends || {};
     var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
       return <span class="tooltip" data-hint={friends[friendID].name}><img class="profilePic" src={"https://graph.facebook.com/" + friendID + "/picture"} alt="friend picture"/></span>;
     });
