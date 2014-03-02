@@ -110,7 +110,7 @@ body {
   body:after {
     clear: both; }
 
-/*
+/*!
   Ionicons, v1.4.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -2328,7 +2328,7 @@ body {
   visibility: hidden;
   display: none; }
 
-/*
+/*!
   Ionicons, v1.4.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -4568,7 +4568,7 @@ body {
   body:after {
     clear: both; }
 
-/*
+/*!
   Ionicons, v1.4.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -7132,7 +7132,7 @@ body {
 
 .Rsvp .rsvpButton {
   display: inline-block;
-  margin: 1em 0.25em;
+  margin: 1em .25em;
   padding: .5em;
   color: #46b979;
   border: 1px solid #46b979; }
