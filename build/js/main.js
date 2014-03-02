@@ -977,6 +977,7 @@ var Store = require('Lawnchair');
 
 Store.prototype.publish = Arbiter.publish;
 Store.prototype.subscribe = Arbiter.subscribe;
+Store.prototype.unsubscribe = Arbiter.unsubscribe;
 
 module.exports = Store;
 },{"Arbiter":"cWvVP8","Lawnchair":"HPHWXz"}],"1zpOES":[function(require,module,exports){
@@ -13362,16 +13363,16 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 
-},{"./ReactComponent":"RDDX+O","./ReactTextComponent":"/gjL2v","./invariant":"hPxNWC"}],"ReactPropTypes":[function(require,module,exports){
-module.exports=require('9axgbZ');
+},{"./ReactComponent":"RDDX+O","./ReactTextComponent":"/gjL2v","./invariant":"hPxNWC"}],"ReactPropTransferer":[function(require,module,exports){
+module.exports=require('K6UoEF');
 },{}],"Arbiter":[function(require,module,exports){
 module.exports=require('cWvVP8');
 },{}],"mixins/ArbiterMixin":[function(require,module,exports){
 module.exports=require('4vB33x');
 },{}],"EventPluginRegistry":[function(require,module,exports){
 module.exports=require('bKyk3V');
-},{}],"ReactReconcileTransaction":[function(require,module,exports){
-module.exports=require('38o64s');
+},{}],"ReactPropTypes":[function(require,module,exports){
+module.exports=require('9axgbZ');
 },{}],"EventPluginHub":[function(require,module,exports){
 module.exports=require('EddLdT');
 },{}],"1msWMR":[function(require,module,exports){
@@ -13520,40 +13521,40 @@ var EventStore = window.EventStore = new Store({name: 'events', record: 'event'}
 module.exports = EventStore;
 },{"Dispatcher":"Jxf8r5","Store":"56S4uO"}],"EventConstants":[function(require,module,exports){
 module.exports=require('Gaqr6V');
-},{}],"ReactServerRendering":[function(require,module,exports){
-module.exports=require('JvdSDI');
+},{}],"ReactReconcileTransaction":[function(require,module,exports){
+module.exports=require('38o64s');
 },{}],"EnterLeaveEventPlugin":[function(require,module,exports){
 module.exports=require('NAAuN8');
 },{}],"EventStore":[function(require,module,exports){
 module.exports=require('1msWMR');
 },{}],"DefaultEventPluginOrder":[function(require,module,exports){
 module.exports=require('rrDzGt');
-},{}],"ReactTextComponent":[function(require,module,exports){
-module.exports=require('/gjL2v');
+},{}],"ReactServerRendering":[function(require,module,exports){
+module.exports=require('JvdSDI');
 },{}],"DefaultDOMPropertyConfig":[function(require,module,exports){
 module.exports=require('lojxFf');
 },{}],"Store":[function(require,module,exports){
 module.exports=require('56S4uO');
 },{}],"Danger":[function(require,module,exports){
 module.exports=require('M4LxPz');
-},{}],"ReactUpdates":[function(require,module,exports){
-module.exports=require('dwYRw4');
+},{}],"ReactTextComponent":[function(require,module,exports){
+module.exports=require('/gjL2v');
 },{}],"DOMPropertyOperations":[function(require,module,exports){
 module.exports=require('n+MrOf');
 },{}],"Dispatcher":[function(require,module,exports){
 module.exports=require('Jxf8r5');
 },{}],"DOMProperty":[function(require,module,exports){
 module.exports=require('fduHX3');
-},{}],"SimpleEventPlugin":[function(require,module,exports){
-module.exports=require('vsWsrL');
+},{}],"ReactUpdates":[function(require,module,exports){
+module.exports=require('dwYRw4');
 },{}],"DOMChildrenOperations":[function(require,module,exports){
 module.exports=require('a0oMnh');
 },{}],"objMapKeyVal":[function(require,module,exports){
 module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
 module.exports=require('KJ8HU6');
-},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
-module.exports=require('oNOIlC');
+},{}],"SyntheticEvent":[function(require,module,exports){
+module.exports=require('L5ht1h');
 },{}],"CSSPropertyOperations":[function(require,module,exports){
 module.exports=require('BlPn6+');
 },{}],"objMap":[function(require,module,exports){
@@ -13940,8 +13941,8 @@ var Rsvp = React.createClass({displayName: 'Rsvp',
 });
 
 module.exports = Rsvp;
-},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticMutationEvent":[function(require,module,exports){
-module.exports=require('FactSb');
+},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticKeyboardEvent":[function(require,module,exports){
+module.exports=require('oNOIlC');
 },{}],"BX3Qr7":[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -13952,12 +13953,16 @@ var Rsvp = require('Rsvp');
 
 var Tableslip = React.createClass({displayName: 'Tableslip',
   mixins: [ArbiterMixin],
+
+  profileLink: function (friendID) {
+    document.location = "https://www.facebook.com/" + friendID;
+  },
   
   render: function () {
     var date = moment(this.props.event.start_time);
     var friends = this.props.event.friends;
     var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
-      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", alt:"friend picture"}));
+      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", onClick:function () { return this.profileLink(friendID) }, alt:"friend picture"}));
     });
 
     var more = this.props.event.count - pics.length;
@@ -14004,10 +14009,10 @@ module.exports = Tableslip;
 module.exports=require('Q4rOoG');
 },{}],"Tableslip":[function(require,module,exports){
 module.exports=require('BX3Qr7');
-},{}],"SyntheticEvent":[function(require,module,exports){
-module.exports=require('L5ht1h');
-},{}],"ReactDOMInput":[function(require,module,exports){
-module.exports=require('e8EEBl');
+},{}],"SyntheticMutationEvent":[function(require,module,exports){
+module.exports=require('FactSb');
+},{}],"ReactDefaultInjection":[function(require,module,exports){
+module.exports=require('oRxGN0');
 },{}],"joinClasses":[function(require,module,exports){
 module.exports=require('odpU/7');
 },{}],"Events":[function(require,module,exports){
@@ -14020,54 +14025,54 @@ module.exports=require('QDHGTP');
 module.exports=require('hPxNWC');
 },{}],"Application":[function(require,module,exports){
 module.exports=require('WLDCvt');
-},{}],"SyntheticUIEvent":[function(require,module,exports){
-module.exports=require('unRgeP');
-},{}],"ReactDefaultInjection":[function(require,module,exports){
-module.exports=require('oRxGN0');
+},{}],"SyntheticFocusEvent":[function(require,module,exports){
+module.exports=require('ucaFnA');
+},{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
+module.exports=require('FN7wZd');
 },{}],"hyphenate":[function(require,module,exports){
 module.exports=require('lqHdFC');
 },{}],"Rsvp":[function(require,module,exports){
 module.exports=require('gq8/iv');
-},{}],"SyntheticWheelEvent":[function(require,module,exports){
-module.exports=require('MH4TbT');
-},{}],"ReactDOMSelect":[function(require,module,exports){
-module.exports=require('gA/to5');
+},{}],"Transaction":[function(require,module,exports){
+module.exports=require('aekoY0');
+},{}],"ReactDOMTextarea":[function(require,module,exports){
+module.exports=require('omUt5u');
 },{}],"getReactRootElementInContainer":[function(require,module,exports){
 module.exports=require('sz+OE9');
-},{}],"Keyword":[function(require,module,exports){
-module.exports=require('WIV9q4');
-},{}],"accumulate":[function(require,module,exports){
-module.exports=require('rpm6kU');
+},{}],"Logo":[function(require,module,exports){
+module.exports=require('AJg5N/');
+},{}],"SyntheticWheelEvent":[function(require,module,exports){
+module.exports=require('MH4TbT');
 },{}],"Header":[function(require,module,exports){
 module.exports=require('lPO+H4');
 },{}],"ge":[function(require,module,exports){
 module.exports=require('7THwY4');
-},{}],"Footer":[function(require,module,exports){
-module.exports=require('ll/2ER');
-},{}],"Transaction":[function(require,module,exports){
-module.exports=require('aekoY0');
-},{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
-module.exports=require('FN7wZd');
+},{}],"Keyword":[function(require,module,exports){
+module.exports=require('WIV9q4');
+},{}],"SyntheticUIEvent":[function(require,module,exports){
+module.exports=require('unRgeP');
+},{}],"ReactDOMSelect":[function(require,module,exports){
+module.exports=require('gA/to5');
 },{}],"forEachAccumulated":[function(require,module,exports){
 module.exports=require('pcy7SL');
-},{}],"Logo":[function(require,module,exports){
-module.exports=require('AJg5N/');
-},{}],"createNodesFromMarkup":[function(require,module,exports){
-module.exports=require('iqoonm');
+},{}],"Footer":[function(require,module,exports){
+module.exports=require('ll/2ER');
+},{}],"accumulate":[function(require,module,exports){
+module.exports=require('rpm6kU');
 },{}],"main":[function(require,module,exports){
 module.exports=require('1zpOES');
 },{}],"ex":[function(require,module,exports){
 module.exports=require('bHKEgX');
 },{}],"EventPropagators":[function(require,module,exports){
 module.exports=require('n/zMdI');
-},{}],"emptyFunction":[function(require,module,exports){
-module.exports=require('RxjlFd');
-},{}],"ReactChildren":[function(require,module,exports){
-module.exports=require('7bESex');
-},{}],"adler32":[function(require,module,exports){
-module.exports=require('5ukn/R');
+},{}],"createNodesFromMarkup":[function(require,module,exports){
+module.exports=require('iqoonm');
 },{}],"React":[function(require,module,exports){
 module.exports=require('53xxmY');
+},{}],"createObjectFrom":[function(require,module,exports){
+module.exports=require('OocYg9');
+},{}],"ReactComponent":[function(require,module,exports){
+module.exports=require('RDDX+O');
 },{}],"dangerousStyleValue":[function(require,module,exports){
 module.exports=require('vbLjBj');
 },{}],"ReactComponentEnvironment":[function(require,module,exports){
@@ -14076,78 +14081,78 @@ module.exports=require('kOHKbO');
 module.exports=require('HDEmgB');
 },{}],"ReactDOM":[function(require,module,exports){
 module.exports=require('6GzACJ');
-},{}],"escapeTextForBrowser":[function(require,module,exports){
-module.exports=require('ZaIegL');
-},{}],"ReactDOMForm":[function(require,module,exports){
-module.exports=require('2ZgJdE');
-},{}],"createObjectFrom":[function(require,module,exports){
-module.exports=require('OocYg9');
-},{}],"ReactDOMOption":[function(require,module,exports){
-module.exports=require('Kfaqkr');
-},{}],"flattenChildren":[function(require,module,exports){
-module.exports=require('cza1WC');
-},{}],"mixInto":[function(require,module,exports){
-module.exports=require('qzQld6');
+},{}],"emptyFunction":[function(require,module,exports){
+module.exports=require('RxjlFd');
+},{}],"ReactDOMIDOperations":[function(require,module,exports){
+module.exports=require('nRDvnf');
 },{}],"copyProperties":[function(require,module,exports){
 module.exports=require('M+gx0D');
+},{}],"ReactDOMInput":[function(require,module,exports){
+module.exports=require('e8EEBl');
+},{}],"escapeTextForBrowser":[function(require,module,exports){
+module.exports=require('ZaIegL');
+},{}],"mixInto":[function(require,module,exports){
+module.exports=require('qzQld6');
+},{}],"adler32":[function(require,module,exports){
+module.exports=require('5ukn/R');
 },{}],"memoizeStringOnly":[function(require,module,exports){
 module.exports=require('w+d2Nh');
-},{}],"getEventTarget":[function(require,module,exports){
-module.exports=require('eoIwTT');
+},{}],"flattenChildren":[function(require,module,exports){
+module.exports=require('cza1WC');
 },{}],"ReactDefaultPerf":[function(require,module,exports){
 module.exports=require('MTKS4R');
 },{}],"ViewportMetrics":[function(require,module,exports){
 module.exports=require('sk6wio');
 },{}],"ReactEventEmitterMixin":[function(require,module,exports){
 module.exports=require('cwSdrc');
-},{}],"getMarkupWrap":[function(require,module,exports){
-module.exports=require('a26iu1');
-},{}],"ReactMarkupChecksum":[function(require,module,exports){
-module.exports=require('TUHHsM');
+},{}],"getEventTarget":[function(require,module,exports){
+module.exports=require('eoIwTT');
+},{}],"ReactInstanceHandles":[function(require,module,exports){
+module.exports=require('owd960');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
 },{}],"ReactMultiChild":[function(require,module,exports){
 module.exports=require('UlnLr0');
-},{}],"getTextContentAccessor":[function(require,module,exports){
-module.exports=require('Suh93r');
-},{}],"ReactPropTransferer":[function(require,module,exports){
-module.exports=require('K6UoEF');
-},{}],"ReactInputSelection":[function(require,module,exports){
-module.exports=require('eT7xLu');
+},{}],"getMarkupWrap":[function(require,module,exports){
+module.exports=require('a26iu1');
 },{}],"ReactMount":[function(require,module,exports){
 module.exports=require('1R+7Eu');
+},{}],"ReactInputSelection":[function(require,module,exports){
+module.exports=require('eT7xLu');
+},{}],"ReactOnDOMReady":[function(require,module,exports){
+module.exports=require('rkZBuo');
 },{}],"isEventSupported":[function(require,module,exports){
 module.exports=require('Iv78kc');
 },{}],"EventPluginUtils":[function(require,module,exports){
 module.exports=require('K4QB+L');
 },{}],"ReactCurrentOwner":[function(require,module,exports){
 module.exports=require('j7aNlU');
-},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
-module.exports=require('+VDCcA');
-},{}],"keyMirror":[function(require,module,exports){
-module.exports=require('n1FgJb');
+},{}],"ReactChildren":[function(require,module,exports){
+module.exports=require('7bESex');
+},{}],"getTextContentAccessor":[function(require,module,exports){
+module.exports=require('Suh93r');
 },{}],"ReactCompositeComponent":[function(require,module,exports){
 module.exports=require('nAvIQF');
 },{}],"PooledClass":[function(require,module,exports){
 module.exports=require('5mz1Gs');
-},{}],"ReactDOMIDOperations":[function(require,module,exports){
-module.exports=require('nRDvnf');
-},{}],"mergeHelpers":[function(require,module,exports){
-module.exports=require('oewMNJ');
-},{}],"SyntheticMouseEvent":[function(require,module,exports){
-module.exports=require('v7zPvJ');
+},{}],"ReactDOMForm":[function(require,module,exports){
+module.exports=require('2ZgJdE');
+},{}],"keyMirror":[function(require,module,exports){
+module.exports=require('n1FgJb');
+},{}],"SimpleEventPlugin":[function(require,module,exports){
+module.exports=require('vsWsrL');
 },{}],"ExecutionEnvironment":[function(require,module,exports){
 module.exports=require('mrmvk9');
 },{}],"ReactEventEmitter":[function(require,module,exports){
 module.exports=require('qPIJ8M');
-},{}],"merge":[function(require,module,exports){
-module.exports=require('7duoWY');
-},{}],"ReactEventTopLevelCallback":[function(require,module,exports){
-module.exports=require('f4CWDK');
+},{}],"mergeHelpers":[function(require,module,exports){
+module.exports=require('oewMNJ');
+},{}],"ReactMarkupChecksum":[function(require,module,exports){
+module.exports=require('TUHHsM');
 },{}],"EventListener":[function(require,module,exports){
 module.exports=require('e0NKSL');
-},{}],"ReactOnDOMReady":[function(require,module,exports){
-module.exports=require('rkZBuo');
+},{}],"ReactNativeComponent":[function(require,module,exports){
+module.exports=require('g13zJS');
 },{}],"mergeInto":[function(require,module,exports){
 module.exports=require('1Kx0L6');
 },{}],"MobileSafariClickEventPlugin":[function(require,module,exports){
@@ -14156,12 +14161,12 @@ module.exports=require('OHn5BI');
 module.exports=require('L1h3na');
 },{}],"ReactDOMButton":[function(require,module,exports){
 module.exports=require('0sS+Uk');
-},{}],"ReactNativeComponent":[function(require,module,exports){
-module.exports=require('g13zJS');
-},{}],"SyntheticFocusEvent":[function(require,module,exports){
-module.exports=require('ucaFnA');
-},{}],"ReactOwner":[function(require,module,exports){
-module.exports=require('YwelYh');
+},{}],"merge":[function(require,module,exports){
+module.exports=require('7duoWY');
+},{}],"SyntheticMouseEvent":[function(require,module,exports){
+module.exports=require('v7zPvJ');
+},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
+module.exports=require('1fqbih');
 },{}],"traverseAllChildren":[function(require,module,exports){
 module.exports=require('27ud2W');
 },{}],"Lawnchair":[function(require,module,exports){
@@ -14170,13 +14175,13 @@ module.exports=require('HPHWXz');
 module.exports=require('CoHoju');
 },{}],"CSSProperty":[function(require,module,exports){
 module.exports=require('sWBULG');
-},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
-module.exports=require('1fqbih');
-},{}],"ReactInstanceHandles":[function(require,module,exports){
-module.exports=require('owd960');
-},{}],"ReactDOMTextarea":[function(require,module,exports){
-module.exports=require('omUt5u');
-},{}],"ReactComponent":[function(require,module,exports){
-module.exports=require('RDDX+O');
+},{}],"ReactOwner":[function(require,module,exports){
+module.exports=require('YwelYh');
+},{}],"ReactEventTopLevelCallback":[function(require,module,exports){
+module.exports=require('f4CWDK');
+},{}],"ReactDOMOption":[function(require,module,exports){
+module.exports=require('Kfaqkr');
+},{}],"ReactComponentBrowserEnvironment":[function(require,module,exports){
+module.exports=require('+VDCcA');
 },{}]},{},["1zpOES"])
 ;

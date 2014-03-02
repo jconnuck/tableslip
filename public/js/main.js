@@ -977,6 +977,7 @@ var Store = require('Lawnchair');
 
 Store.prototype.publish = Arbiter.publish;
 Store.prototype.subscribe = Arbiter.subscribe;
+Store.prototype.unsubscribe = Arbiter.unsubscribe;
 
 module.exports = Store;
 },{"Arbiter":"cWvVP8","Lawnchair":"HPHWXz"}],"1zpOES":[function(require,module,exports){
@@ -13542,18 +13543,18 @@ module.exports=require('/gjL2v');
 module.exports=require('n+MrOf');
 },{}],"Dispatcher":[function(require,module,exports){
 module.exports=require('Jxf8r5');
-},{}],"DOMChildrenOperations":[function(require,module,exports){
-module.exports=require('a0oMnh');
-},{}],"ReactUpdates":[function(require,module,exports){
-module.exports=require('dwYRw4');
 },{}],"DOMProperty":[function(require,module,exports){
 module.exports=require('fduHX3');
+},{}],"ReactUpdates":[function(require,module,exports){
+module.exports=require('dwYRw4');
+},{}],"DOMChildrenOperations":[function(require,module,exports){
+module.exports=require('a0oMnh');
 },{}],"objMapKeyVal":[function(require,module,exports){
 module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
 module.exports=require('KJ8HU6');
-},{}],"SimpleEventPlugin":[function(require,module,exports){
-module.exports=require('vsWsrL');
+},{}],"SyntheticEvent":[function(require,module,exports){
+module.exports=require('L5ht1h');
 },{}],"CSSPropertyOperations":[function(require,module,exports){
 module.exports=require('BlPn6+');
 },{}],"objMap":[function(require,module,exports){
@@ -13940,8 +13941,8 @@ var Rsvp = React.createClass({displayName: 'Rsvp',
 });
 
 module.exports = Rsvp;
-},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticEvent":[function(require,module,exports){
-module.exports=require('L5ht1h');
+},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticKeyboardEvent":[function(require,module,exports){
+module.exports=require('oNOIlC');
 },{}],"BX3Qr7":[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -13952,12 +13953,16 @@ var Rsvp = require('Rsvp');
 
 var Tableslip = React.createClass({displayName: 'Tableslip',
   mixins: [ArbiterMixin],
+
+  profileLink: function (friendID) {
+    document.location = "https://www.facebook.com/" + friendID;
+  },
   
   render: function () {
     var date = moment(this.props.event.start_time);
     var friends = this.props.event.friends;
     var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
-      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", alt:"friend picture"}));
+      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", onClick:function () { return this.profileLink(friendID) }, alt:"friend picture"}));
     });
 
     var more = this.props.event.count - pics.length;
@@ -14004,32 +14009,32 @@ module.exports = Tableslip;
 module.exports=require('Q4rOoG');
 },{}],"Tableslip":[function(require,module,exports){
 module.exports=require('BX3Qr7');
-},{}],"SyntheticMouseEvent":[function(require,module,exports){
-module.exports=require('v7zPvJ');
+},{}],"SyntheticMutationEvent":[function(require,module,exports){
+module.exports=require('FactSb');
 },{}],"ReactDefaultInjection":[function(require,module,exports){
 module.exports=require('oRxGN0');
 },{}],"joinClasses":[function(require,module,exports){
 module.exports=require('odpU/7');
 },{}],"Events":[function(require,module,exports){
 module.exports=require('FbWSBG');
-},{}],"SyntheticMutationEvent":[function(require,module,exports){
-module.exports=require('FactSb');
+},{}],"SyntheticTouchEvent":[function(require,module,exports){
+module.exports=require('49cVaj');
 },{}],"Filters":[function(require,module,exports){
 module.exports=require('QDHGTP');
 },{}],"invariant":[function(require,module,exports){
 module.exports=require('hPxNWC');
 },{}],"Application":[function(require,module,exports){
 module.exports=require('WLDCvt');
-},{}],"SyntheticTouchEvent":[function(require,module,exports){
-module.exports=require('49cVaj');
+},{}],"SyntheticFocusEvent":[function(require,module,exports){
+module.exports=require('ucaFnA');
 },{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
 module.exports=require('FN7wZd');
 },{}],"hyphenate":[function(require,module,exports){
 module.exports=require('lqHdFC');
 },{}],"Rsvp":[function(require,module,exports){
 module.exports=require('gq8/iv');
-},{}],"SyntheticUIEvent":[function(require,module,exports){
-module.exports=require('unRgeP');
+},{}],"Transaction":[function(require,module,exports){
+module.exports=require('aekoY0');
 },{}],"ReactDOMTextarea":[function(require,module,exports){
 module.exports=require('omUt5u');
 },{}],"getReactRootElementInContainer":[function(require,module,exports){
@@ -14044,8 +14049,8 @@ module.exports=require('lPO+H4');
 module.exports=require('7THwY4');
 },{}],"Keyword":[function(require,module,exports){
 module.exports=require('WIV9q4');
-},{}],"Transaction":[function(require,module,exports){
-module.exports=require('aekoY0');
+},{}],"SyntheticUIEvent":[function(require,module,exports){
+module.exports=require('unRgeP');
 },{}],"ReactDOMSelect":[function(require,module,exports){
 module.exports=require('gA/to5');
 },{}],"forEachAccumulated":[function(require,module,exports){
@@ -14078,8 +14083,8 @@ module.exports=require('HDEmgB');
 module.exports=require('6GzACJ');
 },{}],"emptyFunction":[function(require,module,exports){
 module.exports=require('RxjlFd');
-},{}],"ReactDOMForm":[function(require,module,exports){
-module.exports=require('2ZgJdE');
+},{}],"ReactDOMIDOperations":[function(require,module,exports){
+module.exports=require('nRDvnf');
 },{}],"copyProperties":[function(require,module,exports){
 module.exports=require('M+gx0D');
 },{}],"ReactDOMInput":[function(require,module,exports){
@@ -14102,66 +14107,66 @@ module.exports=require('sk6wio');
 module.exports=require('cwSdrc');
 },{}],"getEventTarget":[function(require,module,exports){
 module.exports=require('eoIwTT');
-},{}],"ReactMarkupChecksum":[function(require,module,exports){
-module.exports=require('TUHHsM');
+},{}],"ReactInstanceHandles":[function(require,module,exports){
+module.exports=require('owd960');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
-},{}],"ReactMount":[function(require,module,exports){
-module.exports=require('1R+7Eu');
+},{}],"ReactMultiChild":[function(require,module,exports){
+module.exports=require('UlnLr0');
 },{}],"getMarkupWrap":[function(require,module,exports){
 module.exports=require('a26iu1');
-},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
-module.exports=require('1fqbih');
+},{}],"ReactMount":[function(require,module,exports){
+module.exports=require('1R+7Eu');
 },{}],"ReactInputSelection":[function(require,module,exports){
 module.exports=require('eT7xLu');
 },{}],"ReactOnDOMReady":[function(require,module,exports){
 module.exports=require('rkZBuo');
-},{}],"getTextContentAccessor":[function(require,module,exports){
-module.exports=require('Suh93r');
+},{}],"isEventSupported":[function(require,module,exports){
+module.exports=require('Iv78kc');
 },{}],"EventPluginUtils":[function(require,module,exports){
 module.exports=require('K4QB+L');
 },{}],"ReactCurrentOwner":[function(require,module,exports){
 module.exports=require('j7aNlU');
 },{}],"ReactChildren":[function(require,module,exports){
 module.exports=require('7bESex');
-},{}],"isEventSupported":[function(require,module,exports){
-module.exports=require('Iv78kc');
+},{}],"getTextContentAccessor":[function(require,module,exports){
+module.exports=require('Suh93r');
 },{}],"ReactCompositeComponent":[function(require,module,exports){
 module.exports=require('nAvIQF');
 },{}],"PooledClass":[function(require,module,exports){
 module.exports=require('5mz1Gs');
-},{}],"ReactDOMIDOperations":[function(require,module,exports){
-module.exports=require('nRDvnf');
+},{}],"ReactDOMForm":[function(require,module,exports){
+module.exports=require('2ZgJdE');
 },{}],"keyMirror":[function(require,module,exports){
 module.exports=require('n1FgJb');
-},{}],"SyntheticFocusEvent":[function(require,module,exports){
-module.exports=require('ucaFnA');
+},{}],"SimpleEventPlugin":[function(require,module,exports){
+module.exports=require('vsWsrL');
 },{}],"ExecutionEnvironment":[function(require,module,exports){
 module.exports=require('mrmvk9');
 },{}],"ReactEventEmitter":[function(require,module,exports){
 module.exports=require('qPIJ8M');
-},{}],"merge":[function(require,module,exports){
-module.exports=require('7duoWY');
-},{}],"ReactInstanceHandles":[function(require,module,exports){
-module.exports=require('owd960');
+},{}],"mergeHelpers":[function(require,module,exports){
+module.exports=require('oewMNJ');
+},{}],"ReactMarkupChecksum":[function(require,module,exports){
+module.exports=require('TUHHsM');
 },{}],"EventListener":[function(require,module,exports){
 module.exports=require('e0NKSL');
 },{}],"ReactNativeComponent":[function(require,module,exports){
 module.exports=require('g13zJS');
-},{}],"mergeHelpers":[function(require,module,exports){
-module.exports=require('oewMNJ');
+},{}],"mergeInto":[function(require,module,exports){
+module.exports=require('1Kx0L6');
 },{}],"MobileSafariClickEventPlugin":[function(require,module,exports){
 module.exports=require('OHn5BI');
 },{}],"CallbackRegistry":[function(require,module,exports){
 module.exports=require('L1h3na');
 },{}],"ReactDOMButton":[function(require,module,exports){
 module.exports=require('0sS+Uk');
-},{}],"mergeInto":[function(require,module,exports){
-module.exports=require('1Kx0L6');
-},{}],"SyntheticKeyboardEvent":[function(require,module,exports){
-module.exports=require('oNOIlC');
-},{}],"ReactMultiChild":[function(require,module,exports){
-module.exports=require('UlnLr0');
+},{}],"merge":[function(require,module,exports){
+module.exports=require('7duoWY');
+},{}],"SyntheticMouseEvent":[function(require,module,exports){
+module.exports=require('v7zPvJ');
+},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
+module.exports=require('1fqbih');
 },{}],"traverseAllChildren":[function(require,module,exports){
 module.exports=require('27ud2W');
 },{}],"Lawnchair":[function(require,module,exports){
