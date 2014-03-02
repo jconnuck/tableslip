@@ -13539,12 +13539,21 @@ module.exports=require('56S4uO');
 module.exports=require('M4LxPz');
 },{}],"ReactTextComponent":[function(require,module,exports){
 module.exports=require('/gjL2v');
+<<<<<<< HEAD
 },{}],"DOMProperty":[function(require,module,exports){
 module.exports=require('fduHX3');
 },{}],"Dispatcher":[function(require,module,exports){
 module.exports=require('Jxf8r5');
 },{}],"DOMPropertyOperations":[function(require,module,exports){
 module.exports=require('n+MrOf');
+=======
+},{}],"DOMPropertyOperations":[function(require,module,exports){
+module.exports=require('n+MrOf');
+},{}],"Dispatcher":[function(require,module,exports){
+module.exports=require('Jxf8r5');
+},{}],"DOMProperty":[function(require,module,exports){
+module.exports=require('fduHX3');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactUpdates":[function(require,module,exports){
 module.exports=require('dwYRw4');
 },{}],"DOMChildrenOperations":[function(require,module,exports){
@@ -13553,8 +13562,13 @@ module.exports=require('a0oMnh');
 module.exports=require('863Jz9');
 },{}],"ChangeEventPlugin":[function(require,module,exports){
 module.exports=require('KJ8HU6');
+<<<<<<< HEAD
 },{}],"SimpleEventPlugin":[function(require,module,exports){
 module.exports=require('vsWsrL');
+=======
+},{}],"SyntheticEvent":[function(require,module,exports){
+module.exports=require('L5ht1h');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"CSSPropertyOperations":[function(require,module,exports){
 module.exports=require('BlPn6+');
 },{}],"objMap":[function(require,module,exports){
@@ -13941,8 +13955,13 @@ var Rsvp = React.createClass({displayName: 'Rsvp',
 });
 
 module.exports = Rsvp;
+<<<<<<< HEAD
 },{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticEvent":[function(require,module,exports){
 module.exports=require('L5ht1h');
+=======
+},{"React":"53xxmY","mixins/ArbiterMixin":"4vB33x"}],"SyntheticKeyboardEvent":[function(require,module,exports){
+module.exports=require('oNOIlC');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"BX3Qr7":[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -13953,12 +13972,16 @@ var Rsvp = require('Rsvp');
 
 var Tableslip = React.createClass({displayName: 'Tableslip',
   mixins: [ArbiterMixin],
+
+  profileLink: function (friendID) {
+    document.location = "https://www.facebook.com/" + friendID;
+  },
   
   render: function () {
     var date = moment(this.props.event.start_time);
     var friends = this.props.event.friends || {};
     var pics = Object.keys(friends).slice(0,5).map(function(friendID) {
-      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", alt:"friend picture"}));
+      return React.DOM.span( {className:"tooltip", 'data-hint':friends[friendID].name}, React.DOM.img( {className:"profilePic", src:"https://graph.facebook.com/" + friendID + "/picture", onClick:function () { return this.profileLink(friendID) }, alt:"friend picture"}));
     });
 
     var more = this.props.event.count - pics.length;
@@ -14005,8 +14028,13 @@ module.exports = Tableslip;
 module.exports=require('Q4rOoG');
 },{}],"Tableslip":[function(require,module,exports){
 module.exports=require('BX3Qr7');
+<<<<<<< HEAD
 },{}],"SyntheticMouseEvent":[function(require,module,exports){
 module.exports=require('v7zPvJ');
+=======
+},{}],"SyntheticMutationEvent":[function(require,module,exports){
+module.exports=require('FactSb');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactDefaultInjection":[function(require,module,exports){
 module.exports=require('oRxGN0');
 },{}],"joinClasses":[function(require,module,exports){
@@ -14021,16 +14049,26 @@ module.exports=require('QDHGTP');
 module.exports=require('hPxNWC');
 },{}],"Application":[function(require,module,exports){
 module.exports=require('WLDCvt');
+<<<<<<< HEAD
 },{}],"SyntheticTouchEvent":[function(require,module,exports){
 module.exports=require('49cVaj');
+=======
+},{}],"SyntheticFocusEvent":[function(require,module,exports){
+module.exports=require('ucaFnA');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactDefaultBatchingStrategy":[function(require,module,exports){
 module.exports=require('FN7wZd');
 },{}],"hyphenate":[function(require,module,exports){
 module.exports=require('lqHdFC');
 },{}],"Rsvp":[function(require,module,exports){
 module.exports=require('gq8/iv');
+<<<<<<< HEAD
 },{}],"SyntheticUIEvent":[function(require,module,exports){
 module.exports=require('unRgeP');
+=======
+},{}],"Transaction":[function(require,module,exports){
+module.exports=require('aekoY0');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactDOMTextarea":[function(require,module,exports){
 module.exports=require('omUt5u');
 },{}],"getReactRootElementInContainer":[function(require,module,exports){
@@ -14045,8 +14083,13 @@ module.exports=require('lPO+H4');
 module.exports=require('7THwY4');
 },{}],"Keyword":[function(require,module,exports){
 module.exports=require('WIV9q4');
+<<<<<<< HEAD
 },{}],"Transaction":[function(require,module,exports){
 module.exports=require('aekoY0');
+=======
+},{}],"SyntheticUIEvent":[function(require,module,exports){
+module.exports=require('unRgeP');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactDOMSelect":[function(require,module,exports){
 module.exports=require('gA/to5');
 },{}],"forEachAccumulated":[function(require,module,exports){
@@ -14079,8 +14122,13 @@ module.exports=require('HDEmgB');
 module.exports=require('6GzACJ');
 },{}],"emptyFunction":[function(require,module,exports){
 module.exports=require('RxjlFd');
+<<<<<<< HEAD
 },{}],"ReactDOMForm":[function(require,module,exports){
 module.exports=require('2ZgJdE');
+=======
+},{}],"ReactDOMIDOperations":[function(require,module,exports){
+module.exports=require('nRDvnf');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"copyProperties":[function(require,module,exports){
 module.exports=require('M+gx0D');
 },{}],"ReactDOMInput":[function(require,module,exports){
@@ -14107,62 +14155,109 @@ module.exports=require('eoIwTT');
 module.exports=require('owd960');
 },{}],"ReactPerf":[function(require,module,exports){
 module.exports=require('S6hUyz');
+<<<<<<< HEAD
 },{}],"ReactMount":[function(require,module,exports){
 module.exports=require('1R+7Eu');
 },{}],"getMarkupWrap":[function(require,module,exports){
 module.exports=require('a26iu1');
 },{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
 module.exports=require('1fqbih');
+=======
+},{}],"ReactMultiChild":[function(require,module,exports){
+module.exports=require('UlnLr0');
+},{}],"getMarkupWrap":[function(require,module,exports){
+module.exports=require('a26iu1');
+},{}],"ReactMount":[function(require,module,exports){
+module.exports=require('1R+7Eu');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactInputSelection":[function(require,module,exports){
 module.exports=require('eT7xLu');
 },{}],"ReactOnDOMReady":[function(require,module,exports){
 module.exports=require('rkZBuo');
+<<<<<<< HEAD
 },{}],"getTextContentAccessor":[function(require,module,exports){
 module.exports=require('Suh93r');
+=======
+},{}],"isEventSupported":[function(require,module,exports){
+module.exports=require('Iv78kc');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"EventPluginUtils":[function(require,module,exports){
 module.exports=require('K4QB+L');
 },{}],"ReactCurrentOwner":[function(require,module,exports){
 module.exports=require('j7aNlU');
 },{}],"ReactChildren":[function(require,module,exports){
 module.exports=require('7bESex');
+<<<<<<< HEAD
 },{}],"isEventSupported":[function(require,module,exports){
 module.exports=require('Iv78kc');
+=======
+},{}],"getTextContentAccessor":[function(require,module,exports){
+module.exports=require('Suh93r');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactCompositeComponent":[function(require,module,exports){
 module.exports=require('nAvIQF');
 },{}],"PooledClass":[function(require,module,exports){
 module.exports=require('5mz1Gs');
+<<<<<<< HEAD
 },{}],"ReactDOMIDOperations":[function(require,module,exports){
 module.exports=require('nRDvnf');
 },{}],"keyMirror":[function(require,module,exports){
 module.exports=require('n1FgJb');
 },{}],"SyntheticFocusEvent":[function(require,module,exports){
 module.exports=require('ucaFnA');
+=======
+},{}],"ReactDOMForm":[function(require,module,exports){
+module.exports=require('2ZgJdE');
+},{}],"keyMirror":[function(require,module,exports){
+module.exports=require('n1FgJb');
+},{}],"SimpleEventPlugin":[function(require,module,exports){
+module.exports=require('vsWsrL');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ExecutionEnvironment":[function(require,module,exports){
 module.exports=require('mrmvk9');
 },{}],"ReactEventEmitter":[function(require,module,exports){
 module.exports=require('qPIJ8M');
+<<<<<<< HEAD
 },{}],"merge":[function(require,module,exports){
 module.exports=require('7duoWY');
+=======
+},{}],"mergeHelpers":[function(require,module,exports){
+module.exports=require('oewMNJ');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"ReactMarkupChecksum":[function(require,module,exports){
 module.exports=require('TUHHsM');
 },{}],"EventListener":[function(require,module,exports){
 module.exports=require('e0NKSL');
 },{}],"ReactNativeComponent":[function(require,module,exports){
 module.exports=require('g13zJS');
+<<<<<<< HEAD
 },{}],"mergeHelpers":[function(require,module,exports){
 module.exports=require('oewMNJ');
+=======
+},{}],"mergeInto":[function(require,module,exports){
+module.exports=require('1Kx0L6');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"MobileSafariClickEventPlugin":[function(require,module,exports){
 module.exports=require('OHn5BI');
 },{}],"CallbackRegistry":[function(require,module,exports){
 module.exports=require('L1h3na');
 },{}],"ReactDOMButton":[function(require,module,exports){
 module.exports=require('0sS+Uk');
+<<<<<<< HEAD
 },{}],"mergeInto":[function(require,module,exports){
 module.exports=require('1Kx0L6');
 },{}],"SyntheticKeyboardEvent":[function(require,module,exports){
 module.exports=require('oNOIlC');
 },{}],"ReactMultiChild":[function(require,module,exports){
 module.exports=require('UlnLr0');
+=======
+},{}],"merge":[function(require,module,exports){
+module.exports=require('7duoWY');
+},{}],"SyntheticMouseEvent":[function(require,module,exports){
+module.exports=require('v7zPvJ');
+},{}],"ReactMultiChildUpdateTypes":[function(require,module,exports){
+module.exports=require('1fqbih');
+>>>>>>> 06ca447ca10e254a0ee2aaa24c08adbf4cadb4a8
 },{}],"traverseAllChildren":[function(require,module,exports){
 module.exports=require('27ud2W');
 },{}],"Lawnchair":[function(require,module,exports){
