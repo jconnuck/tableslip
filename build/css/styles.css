@@ -110,7 +110,7 @@ body {
   body:after {
     clear: both; }
 
-/*!
+/*
   Ionicons, v1.4.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -2328,7 +2328,7 @@ body {
   visibility: hidden;
   display: none; }
 
-/*!
+/*
   Ionicons, v1.4.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -4521,6 +4521,7 @@ body {
   width: 100%;
   margin: 0 0%;
   position: fixed;
+  left: 0;
   bottom: 0;
   z-index: 10;
   padding: .25em;
@@ -4568,7 +4569,7 @@ body {
   body:after {
     clear: both; }
 
-/*!
+/*
   Ionicons, v1.4.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -7075,8 +7076,8 @@ body {
   margin: 1em; }
   .Tableslip .background {
     background: #46b979;
-    background-size: cover;
-    background-position: center;
+    background-size: cover !important;
+    background-position: center !important;
     height: inherit;
     width: inherit;
     position: absolute;
@@ -7132,7 +7133,7 @@ body {
 
 .Rsvp .rsvpButton {
   display: inline-block;
-  margin: 1em .25em;
+  margin: 1em 0.25em;
   padding: .5em;
   color: #46b979;
   border: 1px solid #46b979; }
