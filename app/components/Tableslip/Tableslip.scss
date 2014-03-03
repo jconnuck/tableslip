@@ -13,8 +13,8 @@
 
   .background {
     background: $green;
-    background-size: cover;
-    background-position: center;
+    background-size: cover !important;
+    background-position: center !important;
     height: inherit;
     width: inherit;
     position: absolute;
