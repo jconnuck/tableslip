@@ -22,15 +22,15 @@ var Filters = React.createClass({
       selected: []
     });
 
-    this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
+    // this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
 
-    this.iso.arrange({
-      filter: ''
-    });
+    // this.iso.arrange({
+    //   filter: ''
+    // });
   },
 
   filter: function(keyword, select) {
-    this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
+    // this.iso = this.iso || Isotope.data(document.getElementsByClassName('Events')[0]);
     var selected = this.state.selected.slice();
 
     if (select) {
@@ -44,9 +44,9 @@ var Filters = React.createClass({
     }, function () {
       if (this.state.selected.length) {
         var filters = '.' + this.state.selected.join(',.');
-        this.iso.arrange({
-          filter: filters
-        });
+        // this.iso.arrange({
+        //   filter: filters
+        // });
 
       } else {
         this.clear();
@@ -71,7 +71,7 @@ var Filters = React.createClass({
       <div class="keywords">
         {days}
       </div>
-      <div class="clear" onClick={this.clear}></div>
+      // <div class="clear" onClick={this.clear}></div>
       </div>
     );
   }

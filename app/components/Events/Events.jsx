@@ -8,14 +8,14 @@ var Events = React.createClass({
   mixins: [ArbiterMixin],
 
   componentDidMount: function () {
-    var events = this.refs.Events.getDOMNode();
-    this.iso = new Isotope(events, {
-      isInitLayout: false,
-      itemSelector: '.Tableslip',
-      masonry: {
-        isFitWidth: true
-      }
-    });
+    // var events = this.refs.Events.getDOMNode();
+    // this.iso = new Isotope(events, {
+    //   isInitLayout: false,
+    //   itemSelector: '.Tableslip',
+    //   masonry: {
+    //     isFitWidth: true
+    //   }
+    // });
 
     this.refresh();
   },
@@ -25,8 +25,8 @@ var Events = React.createClass({
   },
 
   refresh: function () {
-    this.iso.reloadItems();
-    this.iso.arrange();
+    // this.iso.reloadItems();
+    // this.iso.arrange();
   },
   
   render: function () {

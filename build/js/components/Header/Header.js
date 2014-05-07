@@ -14,9 +14,11 @@ var Header = React.createClass({displayName: 'Header',
   render: function () {
     return (
       React.DOM.div( {className:"Header"}, 
-        React.DOM.div( {className:"fb-login-button", 'data-width':"1000", 'data-size':"medium", 'data-autologoutlink':"true", 'data-scope':"user_events, friends_events, rsvp_event"}),      
         Logo(null ),
-        Filters(null )
+        Filters(null ),
+        React.DOM.div( {className:"fb-login-button-wrapper"}, 
+          React.DOM.div( {className:"fb-login-button", 'data-size':"icon", 'data-autologoutlink':"true", 'data-scope':"user_events, friends_events, rsvp_event"})
+        )
       )
     );
   }

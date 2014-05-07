@@ -4,17 +4,17 @@
 @import "ionicons/ionicons";
 
 .Header {  
-  .fb-login-button {
-    @include column(16);
-    position: fixed;
-    left: 0;
-    bottom: 0;
+  .fb-login-button-wrapper {
+    @include column(1);
+    height: 3em;
+	display: table;
     z-index: 10;
-    padding: .25em;
     background: $fb-login-button-color;
-    span {
-      float: right;
-      right: 1em;
-    }
+  }
+
+  .fb-login-button {
+  	display: table-cell;
+  	vertical-align: middle;
+  	text-align: center;
   }
 }

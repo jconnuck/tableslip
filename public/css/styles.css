@@ -92,9 +92,9 @@ body {
   width: 100%;
   margin: 0 0%;
   *zoom: 1;
+  text-align: center;
   position: relative;
-  top: 3em;
-  margin: 0 auto 3em auto; }
+  top: 3em; }
   .Events:before, .Events:after {
     content: "";
     display: table; }
@@ -4515,20 +4515,19 @@ body {
 .ion-xbox:before {
   content: "\f30c"; }
 
-.Header .fb-login-button {
+.Header .fb-login-button-wrapper {
   display: inline;
   float: left;
-  width: 100%;
+  width: 6.25%;
   margin: 0 0%;
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  height: 3em;
+  display: table;
   z-index: 10;
-  padding: .25em;
   background: #415caa; }
-  .Header .fb-login-button span {
-    float: right;
-    right: 1em; }
+.Header .fb-login-button {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center; }
 
 body {
   width: 100%;
@@ -7068,6 +7067,8 @@ body {
   transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.71, 1.7, 0.77, 1.24); }
 
 .Tableslip {
+  display: inline-block;
+  vertical-align: top;
   text-decoration: none;
   color: #46b979;
   text-align: center;

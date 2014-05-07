@@ -4,6 +4,8 @@
 @import "hint.css/hint";
 
 .Tableslip {
+  display: inline-block;
+  vertical-align: top;
   text-decoration: none;
   color: $green;
   text-align: center;
